@@ -1,6 +1,6 @@
-# React-Drupal-Starter
+# React-Drupal-Starter-TS
 
-A simple react-redux-saga front-end for Drupal 8 with jsonapi module enabled
+A simple react-redux-saga typescript front-end for Drupal 8 with jsonapi module enabled
 
 ![Alt text](https://github.com/vaidis/react-drupal-starter/blob/master/react-drupal-starter.png?raw=true)
 
