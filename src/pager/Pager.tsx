@@ -2,7 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux'
 import PagerLink from './PagerLink'
 
-const Pager = ({
+interface Props {
+  // pager: any;
+  pager: {
+    first: any;
+    prev: any;
+    next: any;
+    last:  any;
+  };
+  urlParams: any;
+}
+
+
+interface Link {
+  to?: any;
+}
+
+const Pager: React.FC<Props> = ({
   pager,
   urlParams,
 }) => {
