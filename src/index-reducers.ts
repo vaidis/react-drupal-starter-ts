@@ -14,4 +14,6 @@ const IndexReducers = combineReducers({
   articles,
 })
 
+export type AppState = ReturnType<typeof IndexReducers>
+
 export default IndexReducers;

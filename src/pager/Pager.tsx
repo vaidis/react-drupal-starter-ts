@@ -1,35 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import PagerLink from './PagerLink'
+import { AppState } from './../index-reducers'
 
-interface Props {
-  // pager: any;
+interface Props {  
   pager: {
-    first: any;
-    prev: any;
-    next: any;
-    last:  any;
+    first: number;
+    prev: number;
+    next: number;
+    last:  number;
   };
-  urlParams: any;
-}
-
-
-interface Link {
-  to?: any;
+  urlParams: {
+    items: number;
+    offset: number;
+    page: number;
+    search: string;
+    terms: string[];
+  };
 }
 
 const Pager: React.FC<Props> = ({
   pager,
   urlParams,
 }) => {
-  /**
-   * get the pager numbers from store.api.pager
-   * get the urls settings from state.api.urlParams
-   * and return the pager
-   *
-   * @param {object} pager - {next: 8, last: 10}
-   * @param {object} urlParams - {limit: 2, offet: 6}
-   */
+  console.log(urlParams)
   return (
     <div>
       <button type="button" disabled={!pager.first}>
@@ -64,7 +58,7 @@ const Pager: React.FC<Props> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   urlParams: state.api.urlParams,
   pager: state.api.pager,
 })

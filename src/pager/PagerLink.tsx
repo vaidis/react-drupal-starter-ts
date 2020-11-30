@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from "react-router-dom";
+import { AppState } from './../index-reducers'
 
-/**
- * create a pager link
- *
- * @param {string} to - the value of offset
- * @param {string} title - "Next"
- * @param {object} urlParams - url parameters
- */
-function PagerLink({ to, title, urlParams }) {
+interface IProps {
+  to: any;
+  title: any;
+  urlParams: any;
+}
+
+const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
 
   /** include the taxonomy term if needed */
   if (typeof (urlParams.terms) !== 'undefined') {
@@ -20,12 +20,13 @@ function PagerLink({ to, title, urlParams }) {
     }
   }
 
+/** the url does not have any taxonomy term parameters */
   return <Link to={"/?offset=" + to}>{title + " : " + to}</Link>
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   urlParams: state.api.urlParams,
 })
 
 export default connect(mapStateToProps, null)(PagerLink)
-
+               

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom"
 import LinkPrivate from './LinkPrivate'
 
-const Menu = () => {
+const Menu: React.FC  = () => {
   return (
     <div id="Menu">
       <Link to="/">Home</Link>
