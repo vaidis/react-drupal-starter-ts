@@ -58,7 +58,7 @@ Functional components with a few hooks
     - POST_ARTICLE_FILE
     - POST_TAG
 
-  After the user creates a new tag, he expects this to be included in the selected tags, so after every POST_TAG the saga worker will:
+  After the user creates a new tag, he expects the new tag to be included in the selected tags, so after every POST_TAG the saga worker will:
   1. referesh the `store.articlePost.vocabulary` by dispatching the GET_VOCABULARY action
   2. add the new tag to selected tags at `store.articlePost.selected` by dispatching the  ADD_SELECTED action
 
