@@ -9,7 +9,7 @@ import {
   SET_API_PAGER_LINKS,
 } from '../common/constants'
 
-import { IApiActions, IParams, IApiState } from './api-types'
+import { IApiActions, IApiState } from './api-types'
 
 const initialStore = {
   loading: false,

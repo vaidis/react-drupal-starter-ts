@@ -7,27 +7,12 @@ import {
     SET_LOADED_FALSE,
 } from '../common/constants'
 
-// export interface IApiState {
-//     loading: boolean;
-//     loaded: boolean;
-//     search: string;
-//     terms: string[];
-//     urlParams: string;
-//     pager: {
-//         first: number;
-//         last: number;
-//         next: number;
-//         prev: number;
-//         self: number;
-//     },
-// }
-
 export interface IApiState {
     loading: boolean;
     loaded: boolean;
     search: string;
     terms: string[];
-    urlParams: string;
+    urlParams: string | object;
     pager: string | object;
 }
 
@@ -56,12 +41,12 @@ export interface ISetLoadingOff {
 
 export interface ISetApiUrlParams {
     type: typeof SET_API_URL_PARAMS;
-    payload: string;
+    payload: any;
 }
 
 export interface ISetApiPagerLinks {
     type: typeof SET_API_PAGER_LINKS;
-    payload: string;
+    payload: string | object;
 }
 
 export interface ISetLoadedTrue {
