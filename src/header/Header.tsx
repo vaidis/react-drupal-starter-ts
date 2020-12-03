@@ -7,7 +7,7 @@ import UserName from '../user/UserName'
 /**
  * Renders the site header
  * 
- * Using Logo, Menu, UserName
+ * Using: Logo, Menu, UserName
  * 
  * Used by App.tsx
  * 

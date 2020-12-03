@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom"
 import LinkPrivate from './LinkPrivate'
 
+/**
+ * Renders Main menu in the header
+ * 
+ * Used by the Header.tsx
+ * 
+ * @return {string} HTML for menu
+ */
 const Menu: React.FC  = () => {
   return (
     <div id="Menu">

@@ -2,14 +2,9 @@ import React from 'react';
 import { userLoginRequest } from './user-actions'
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
-
 import UserProfile from './UserProfile'
 import {ICredentials} from './user-types'
 
-/**
- * 
- * 
- */
 // import { ConnectedProps } from 'react-redux';
 // type PropsFromRedux = ConnectedProps<typeof connector>
 // type IProps = PropsFromRedux & {dispatchUserLoginRequest: any}
@@ -25,7 +20,7 @@ const UserLogin: React.FC<ReturnType<typeof mapDispatchToProps>> = ({ dispatchUs
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const payload = { name: name, pass: pass }
+    const payload: ICredentials = { name: name, pass: pass }
     dispatchUserLoginRequest(payload)
   }
 
@@ -59,7 +54,7 @@ const UserLogin: React.FC<ReturnType<typeof mapDispatchToProps>> = ({ dispatchUs
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchUserLoginRequest: (credentials: ICredentials) => dispatch(userLoginRequest(credentials)),
+  dispatchUserLoginRequest: (credentials: any) => dispatch(userLoginRequest(credentials)),
 })
 
 const connector = connect(null, mapDispatchToProps)

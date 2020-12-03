@@ -1,5 +1,4 @@
 import {
-  // StrictEffect,
   select,
   fork,
   take,
@@ -14,7 +13,6 @@ import {
   // USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
   // USER_GET_DATA,
-  // USER_GET_DATA,
   USER_SET_DATA,
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
@@ -23,11 +21,17 @@ import {
 
 import { api } from '../api/api';
 import * as endpoint from '../api/endpoints'
-
 import { ICredentials } from './user-types'
 import { ILoginRersponse } from './user-types'
 
-// export function* userLoginWatcher(): Generator<StrictEffect, void, any> {
+/**
+ * Login the user and save the response to redux store
+ *
+ * Using:  api.login and credentials
+ * 
+ * @param {String} name    Username
+ * @param {String} pass    Password
+ */
 function* UserLoginWorker({name, pass}: ICredentials) {
   const credentials = {
     "name": name,
@@ -51,7 +55,11 @@ export function* userLoginWatcher() {
   }
 }
 
-
+/**
+ * Logout the user
+ * 
+ * Using: api.logout, csrf and logout tokens
+ */
 function* UserLogoutWorker() {
   yield put({ type: SET_LOADING_ON })
   try {

@@ -15,10 +15,10 @@ interface IProps {
  * 
  * Used by menu.tsx
  * 
- * @param {String} user    user object from redux state
- * @param {String} to      destination url
- * @param {String} label   what the user see
- * @return {String}        html of the menu item
+ * @param {string} user   - user object from redux state
+ * @param {string} to     - destination url
+ * @param {string} label  - what the user see
+ * @return {string}         html of the menu item
  */
 const PrivateRoute: React.FC<IProps> = ({
   user,

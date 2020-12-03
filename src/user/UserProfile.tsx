@@ -2,13 +2,6 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../index-reducers'
 
-// interface IProps {
-//   user: {
-//     name: string;
-//     uid: number;
-//   }
-// }
-
 type PropsFromRedux = ConnectedProps<typeof connector>
 type IProps = PropsFromRedux & {name?: string; uid?: number}
 

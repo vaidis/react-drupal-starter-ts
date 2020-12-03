@@ -15,7 +15,6 @@ import {
 import { IUserState } from './user-types'
 import { IUserActions } from './user-types'
 
-
 const initialState = {
   current_user: {
     uid: 0,
@@ -25,11 +24,9 @@ const initialState = {
   logout_token: '',
 }
 
-
-// const reducer = (
 const reducer: Reducer<IUserState, IUserActions> = (
   state = initialState,
-  action: any
+  action: IUserActions
 ) => {
   switch (action.type) {
 

@@ -19,6 +19,16 @@ interface Props {
   };
 }
 
+/**
+ * Render Pager
+ * 
+ * Used by: /src/Articles/Articles.tsx
+ * 
+ * Using: drupal backend response saved in redux store
+ * 
+ * @param {Object} pager      - Drupal pager
+ * @param {String} urlParams  - Current URL parameters
+ */
 const Pager: React.FC<Props> = ({
   pager,
   urlParams,

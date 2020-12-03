@@ -9,6 +9,29 @@ interface IProps {
   urlParams: any;
 }
 
+/**
+ * Renders a pager item
+ * 
+ * @param {string} to        - Destination url
+ * @param {string} title     - Menu item label
+ * @param {string} urlParams   Current URL parameters
+ * 
+ * @example
+ * 
+ *     <PagerLink 
+ *        to={2} 
+ *        title={'NEXT'} 
+ *        urlParams={
+ *          items:0, 
+ *          limit: 10, 
+ *          offset:0, 
+ *          page:1, 
+ *          search: "", 
+ *          terms: "some tag"
+ *        } 
+ *     />
+ * 
+ */
 const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
 
   /** include the taxonomy term if needed */
