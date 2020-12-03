@@ -12,8 +12,7 @@ import {
   // USER_GET_STATUS,
 } from '../common/constants'
 
-import { IUserState } from './user-types'
-import { IUserActions } from './user-types'
+import { IUserState, IUserActions } from './user-types'
 
 const initialState = {
   current_user: {

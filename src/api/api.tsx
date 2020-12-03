@@ -1,13 +1,18 @@
 import axios from 'axios';
 import * as endpoint from './endpoints'
 
+/**
+ * GET a csrf token
+ * 
+ * Differect token every time for anonymous users
+ * The same token for loggen in users
+ * 
+ * used by: api functions
+ * using: url of token endpoint
+ * 
+ * @return {string} The csrf token
+ */
 export const getCsrfToken = async () => {
-  /**
-   * GET a csrf token
-   * Differect token every time for anonymous users
-   * The same token for loggen in users
-   * @return {string} response - The csrf token
-   */
   const csrf_token = await axios(endpoint.CSRF_TOKEN)
     .then(response => response.data)
     .catch((error) => {
@@ -22,10 +27,11 @@ export const getCsrfToken = async () => {
 export const api = {
   /**
    * GET request
+   * 
    * @param {string} url - The backend url
-   * @return {object} response - The backend response
+   * @return {object}      The backend response
    */
-  get: async function get(url) {
+  get: async function get(url: string) {
     console.group("api.get", decodeURI(url))
     return axios.get(url, {
       headers: {
@@ -45,16 +51,17 @@ export const api = {
         );
       });
   },
-  login: async function login(url, data) {
+  login: async function login(url:string, data:object) {
     /**
      * POST request for login
-     * @param {string} url - The backend url
+     * 
+     * @param {string} url  - The backend url
      * @param {object} data - The body of POST request
-     * @return {object} response - The backend response
+     * @return {object}       The backend response
      */
     const csrf_token = await getCsrfToken()
     if (csrf_token !== "Connection Error") {
-      const options = {
+      const options: object = {
         url: url,
         method: 'post',
         headers: {
@@ -72,17 +79,18 @@ export const api = {
         });
     }
   },
-  post: async function post(url, data, csrf_token) {
+  post: async function post(url:string, data:string, csrf_token:string) {
 
     /**
      * POST request
-     * @param {string} url - The backend url
-     * @param {object} data - The body of POST request
-     * @raram {string} csrf_token - From the logged in user
-     * @return {object} response - The backend response
+     * 
+     * @param {string} url        - The backend url endpoint
+     * @param {object} data       - The body of POST request
+     * @param {string} csrf_token - CSRF token of the logged in user from redux store
+     * @return {object}             The backend response
      */
     const token = csrf_token ? csrf_token : await getCsrfToken()
-    const options = {
+    const options: object = {
       url: url,
       method: 'post',
       headers: {
@@ -103,17 +111,18 @@ export const api = {
         throw new Error("Conection time out");
       });
   },
-    /**
+  /**
    * POST request for uploading files
-   * @param {string} url - The backend url
-   * @param {string} file - The filename
-   * @param {object} data - The body of POST request
-   * @raram {string} csrf_token - From the logged in user
-   * @return {object} response - The backend response
+   * 
+   * @param {string} url        - The backend url
+   * @param {string} file       - The filename
+   * @param {object} data       - The body of POST request
+   * @param {string} csrf_token - From the logged in user
+   * @return {object}             The backend response
    */
-  postFile: async function postFile(url, file, data, csrf_token) {
+  postFile: async function postFile(url:string, file:string, data:object, csrf_token:string) {
     const token = csrf_token ? csrf_token : await getCsrfToken()
-    const options = {
+    const options: object = {
       url: url,
       method: 'post',
       headers: {
@@ -138,18 +147,18 @@ export const api = {
   },
   /**
    * POST logout
-   * @param {string} url - The backend url
-   * @param {object} data - csrf and logout tokens
-   * @return {object} response - The backend response
+   * 
+   * @param {string} url  - The backend url
+   * @param {object} data - CSRF and logout tokens
+   * @return {object}       The backend response
    */
-  logout: async function logout(url, tokens) {
+  logout: async function logout(url: string, tokens:any) {
     console.log("api.logout(url, tokens): ", decodeURI(url), tokens)
-    const csrf_token = getCsrfToken()
-
+    const csrf_token: any = getCsrfToken()
     if (csrf_token !== "Connection Error") {
       const logout_token = tokens.logout_token
       const csrf_token = tokens.csrf_token
-      const options = {
+      const options: object = {
         url: url + "&token=" + logout_token + "&csrf_token=" + csrf_token,
         method: 'post',
         headers: {
@@ -163,14 +172,12 @@ export const api = {
         .catch(error => {
           throw new Error("Conection time out");
         });
-
     }
-
   },
-  patch: function patch(url, data) {
+  patch: function patch(url:string, data:object) {
     console.log("api.patch ", url, data);
   },
-  delete: function del(url, data) {
+  delete: function del(url:string, data:object) {
     console.log("api.delete ", url, data);
   }
 }

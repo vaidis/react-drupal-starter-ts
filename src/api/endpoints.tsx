@@ -1,3 +1,5 @@
+import { IParams } from './api-types'
+
 /** BACKEND */
 // export const BASE = "http://192.168.56.101"
 export const BASE = "https://stevaidis.mywire.org:444"
@@ -11,11 +13,10 @@ export const STATUS = `${BASE}/user/login_status?_format=json`
 export const LOGOUT = `${BASE}/user/logout?_format=json`
 
 /** ARTICLE */
-export const ARTICLE = (path) => `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path}`
+export const ARTICLE = (path: string) => `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path}`
 export const POST_TAG = `${BASE_API}/taxonomy_term/tags`
 export const ARTICLE_POST_FILE = `${BASE_API}/node/article/field_image`
 export const ARTICLE_POST = `${BASE_API}/node/article`
-
 
 /** ARTICLES */
 const NODE = '/node/article'
@@ -23,12 +24,12 @@ const INCLUDE = '?query_string=&include=field_image,field_tags,uid'
 const OFFSET = '&page[offset]='
 const LIMIT = '&page[limit]='
 const SORT = '&sort[sort-created][path]=created'
-const FILTER = (term) => `&filter[taxonomy_term--tags][condition][path]=field_tags.name&filter[taxonomy_term--tags][condition][operator]=IN&filter[taxonomy_term--tags][condition][value][]=${term}`
-export const ARTICLES = (params) => {
+const FILTER = (term: string) => `&filter[taxonomy_term--tags][condition][path]=field_tags.name&filter[taxonomy_term--tags][condition][operator]=IN&filter[taxonomy_term--tags][condition][value][]=${term}`
+export const ARTICLES = (params: any) => {
   if (params.terms !== "") {
-    console.log("endpoints.js > ARTICLES > params.terms:", params.terms)
-    let FILTERS = ''
-    params.terms.split(',').map((term) => {
+    console.log("endpoints.js > ARTICLES > params.terms:", params)
+    var FILTERS:any = '';
+    params.terms.split(',').map((term: string) => {
       return (
         FILTERS = FILTERS + FILTER(term)
       )
@@ -40,4 +41,4 @@ export const ARTICLES = (params) => {
 }
 
 /** VOCABULARY */
-export const VOCABULARY = (vocabulary) => `${BASE_API}/taxonomy_term/${vocabulary}`
+export const VOCABULARY = (vocabulary: string) => `${BASE_API}/taxonomy_term/${vocabulary}`

@@ -82,6 +82,7 @@ export interface IUserLogoutFailure {
   type: typeof USER_LOGOUT_FAILURE;
   payload: string[];
 }
+
 /** used by the reducer */
 export type IUserActions =
   IUserLoginRequest

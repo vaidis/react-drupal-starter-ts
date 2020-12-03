@@ -1,3 +1,5 @@
+import { Reducer } from 'redux';
+
 import {
   SET_LOADING_ON,
   SET_LOADING_OFF,
@@ -7,11 +9,13 @@ import {
   SET_API_PAGER_LINKS,
 } from '../common/constants'
 
+import { IApiActions, IParams, IApiState } from './api-types'
+
 const initialStore = {
   loading: false,
   loaded: false,
-  terms: '',
   search: '',
+  terms: [],
   urlParams: '',
   pager: {
     first: 0,
@@ -22,8 +26,10 @@ const initialStore = {
   },
 }
 
-const reducer = (state = initialStore, action) => {
-
+const reducer: Reducer<IApiState, IApiActions> = (
+  state = initialStore,
+  action: IApiActions
+) => {
   switch (action.type) {
     case SET_LOADING_ON:
       // console.log("SET_LOADING_ON")

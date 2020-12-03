@@ -7,6 +7,11 @@ import {
   SET_LOADED_FALSE,
 } from '../common/constants'
 
+import {
+  ISetApiUrlParams,
+  ISetApiPagerLinks,
+} from './api-types'
+
 export const setLoadedTrue = () => ({
   type: SET_LOADED_TRUE
 });
@@ -23,12 +28,12 @@ export const setLoadingOff = () => ({
   type: SET_LOADING_OFF
 });
 
-export const setApiUrlParams = (payload) => ({
+export const setApiUrlParams = (payload: ISetApiUrlParams) => ({
   type: SET_API_URL_PARAMS,
   payload
 })
 
-export const setApiPagerLinks = (payload) => ({
+export const setApiPagerLinks = (payload: ISetApiPagerLinks) => ({
   type: SET_API_PAGER_LINKS,
   payload
 });
