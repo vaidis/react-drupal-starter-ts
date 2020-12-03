@@ -1,3 +1,5 @@
+import { Reducer } from 'redux';
+
 import {
   // USER_LOGIN_REQUEST,
   // USER_LOGIN_SUCCESS,
@@ -10,6 +12,10 @@ import {
   // USER_GET_STATUS,
 } from '../common/constants'
 
+import { IUserState } from './user-types'
+import { IUserActions } from './user-types'
+
+
 const initialState = {
   current_user: {
     uid: 0,
@@ -19,11 +25,16 @@ const initialState = {
   logout_token: '',
 }
 
-const reducer = (state = initialState, action) => {
+
+// const reducer = (
+const reducer: Reducer<IUserState, IUserActions> = (
+  state = initialState,
+  action: any
+) => {
   switch (action.type) {
 
     case USER_SET_DATA:
-      console.log("USER_SET_DATA", action)
+      // console.log("USER_SET_DATA", action)
       return {
         ...state,
         current_user: action.payload.current_user,
@@ -32,7 +43,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case USER_LOGOUT_SUCCESS:
-      console.log("USER_LOGOUT_SUCCESS")
+      // console.log("USER_LOGOUT_SUCCESS")
       return initialState;
 
     default:

@@ -1,13 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../index-reducers'
 
-interface IProps {
-  user: {
-    name: string;
-    uid: number;
-  }
-}
+// interface IProps {
+//   user: {
+//     name: string;
+//     uid: number;
+//   }
+// }
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type IProps = PropsFromRedux & {name?: string; uid?: number}
 
 /**
  * Renders a page that shows the user data
@@ -31,4 +34,5 @@ const mapStateToProps = (state: AppState) => ({
   user: state.user,
 })
 
-export default connect(mapStateToProps, null)(UserProfile);
+const connector = connect(mapStateToProps, null)
+export default connector(UserProfile)

@@ -10,6 +10,7 @@ import ArticlePost from './articlePost/ArticlePost'
 
 import RouteProtected from './utils/RouteProtected';
 
+// const App: React.SFC<{}> = () => <CharacterContainer />;
 function App() {
   return (
     <div className="App">

@@ -1,26 +1,21 @@
 import React from 'react';
-// import { Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import { userLogoutRequest } from './user-actions'
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+
 import { AppState } from '../index-reducers'
-
-interface IProps {
-  uid: number;
-  dispatchUserLogoutRequest: any;
-}
-
-// interface ILogout {
-//     type: any,
-//     payload: any;
-// }
+import { ILogoutProps } from './user-types'
 
 /**
+ * Logout user 
+ * 
+ * Using: csrf and logout tokens
  * 
  * @param {Number} uid                        the id of the current user
  * @param {Funtion} dispatchUserLogoutRequest tell saga worker to logout
  */
-const UserLogout: React.FC<IProps> = ({ uid, dispatchUserLogoutRequest }) => {
+const UserLogout: React.FC<ILogoutProps> = ({ uid, dispatchUserLogoutRequest }) => {
   return (
     <div>
       { uid !== 0 && (
@@ -35,8 +30,7 @@ const UserLogout: React.FC<IProps> = ({ uid, dispatchUserLogoutRequest }) => {
   );
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch<ILogout>) => ({
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchUserLogoutRequest: () => dispatch(userLogoutRequest()),
 })
 const mapStateToProps = (state: AppState) => ({

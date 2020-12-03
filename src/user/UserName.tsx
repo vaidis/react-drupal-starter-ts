@@ -30,7 +30,6 @@ const UserName: React.FC<IProps> = ({ name, uid }) => {
           </div>
           : ' Anonymous'
       }
-
     </div>
   );
 }

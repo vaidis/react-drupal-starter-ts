@@ -55,7 +55,7 @@ const Articles = ({
     storeParams,
   ]);
 
-  console.log("Articles", articles)
+  // console.log("Articles", articles)
 
   return (
     <div>
@@ -66,7 +66,7 @@ const Articles = ({
             articles.map((item, i) => {
 
               /** terms */
-              console.log("item.field_tags", item.field_tags)
+              // console.log("item.field_tags", item.field_tags)
               let terms = ''
               terms = item.field_tags.map((term, i) => {
                 return (

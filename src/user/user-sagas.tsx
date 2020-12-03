@@ -1,4 +1,5 @@
 import {
+  // StrictEffect,
   select,
   fork,
   take,
@@ -23,26 +24,35 @@ import {
 import { api } from '../api/api';
 import * as endpoint from '../api/endpoints'
 
-function* UserLoginWorker(loginOptions) {
-  yield put({ type: SET_LOADING_ON })
+import { ICredentials } from './user-types'
+import { ILoginRersponse } from './user-types'
+
+// export function* userLoginWatcher(): Generator<StrictEffect, void, any> {
+function* UserLoginWorker({name, pass}: ICredentials) {
   const credentials = {
-    "name": loginOptions.credentials.name,
-    "pass": loginOptions.credentials.pass
+    "name": name,
+    "pass": pass,
   }
+  yield put({ type: SET_LOADING_ON })
   try {
-    const response = yield call(api.login, endpoint.LOGIN, credentials)
+    const response: ILoginRersponse = yield call(api.login, endpoint.LOGIN, credentials)
     yield put({ type: USER_SET_DATA, payload: response.data });
-    // console.log("UserLoginWorker > response", response);
   } catch (error) {
-    // console.log("UserLoginWorker > error: ", error);
     yield put({ type: USER_LOGIN_FAILURE });
   } finally {
     yield put({ type: SET_LOADING_OFF })
   }
 }
 
+export function* userLoginWatcher() {
+  while (true) {
+    const payload = yield take(USER_LOGIN_REQUEST);
+    yield fork(UserLoginWorker, payload)
+  }
+}
+
+
 function* UserLogoutWorker() {
-  // console.log("userLogoutWorker");
   yield put({ type: SET_LOADING_ON })
   try {
     const state = yield select()
@@ -53,23 +63,9 @@ function* UserLogoutWorker() {
     yield call(api.logout, endpoint.LOGOUT, tokens);
     yield put({ type: USER_LOGOUT_SUCCESS });
   } catch (error) {
-    // console.log("userLogoutWarker error", error);
     yield put({ type: USER_LOGOUT_FAILURE });
   } finally {
     yield put({ type: SET_LOADING_OFF })
-  }
-}
-
-
-export function* userLoginWatcher() {
-  while (true) {
-    const actionPayload = yield take(USER_LOGIN_REQUEST);
-    const credentials = {
-      "name": actionPayload.payload.name,
-      "pass": actionPayload.payload.pass
-    }
-    const loginOptions = { credentials }
-    yield fork(UserLoginWorker, loginOptions)
   }
 }
 

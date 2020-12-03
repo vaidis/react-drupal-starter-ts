@@ -1,16 +1,30 @@
 import React from 'react';
 import { userLoginRequest } from './user-actions'
 import { connect } from 'react-redux';
+import { Dispatch } from "redux";
 
 import UserProfile from './UserProfile'
+import {ICredentials} from './user-types'
 
+/**
+ * 
+ * 
+ */
+// import { ConnectedProps } from 'react-redux';
+// type PropsFromRedux = ConnectedProps<typeof connector>
+// type IProps = PropsFromRedux & {dispatchUserLoginRequest: any}
 
-const UserLogin = ({ dispatchUserLoginRequest }) => {
+/**
+ * Login Form
+ * 
+ * @param {Function} dispatchUserLoginRequest dispatch action to start saga worker login
+ */
+const UserLogin: React.FC<ReturnType<typeof mapDispatchToProps>> = ({ dispatchUserLoginRequest }) => {
   const [name, setName] = React.useState("manager");
   const [pass, setPass] = React.useState("1234");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
     const payload = { name: name, pass: pass }
     dispatchUserLoginRequest(payload)
   }
@@ -44,12 +58,9 @@ const UserLogin = ({ dispatchUserLoginRequest }) => {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatchUserLoginRequest: credentials => dispatch(userLoginRequest(credentials)),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchUserLoginRequest: (credentials: ICredentials) => dispatch(userLoginRequest(credentials)),
 })
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+const connector = connect(null, mapDispatchToProps)
+export default connector(UserLogin)
