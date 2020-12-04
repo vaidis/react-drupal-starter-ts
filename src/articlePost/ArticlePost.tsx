@@ -103,8 +103,10 @@ const ArticlePost: React.FC = () => {
   }
 
   /**
+   * IMAGE upload
    *
-   * react-dropzone-uploader POST response
+   * Using: react-dropzone-uploader component
+   *
    * Gets the id of the new image just stored in backend
    * api: https://github.com/fortana-co/react-dropzone-uploader/blob/8603b1892f568ef14f35ace5596c3f5b4b6381d3/docs/api.md
    *
@@ -130,11 +132,11 @@ const ArticlePost: React.FC = () => {
              * for some reason, the fileWithMeta gives the data of status
              * and the status gives the data of the fileWithMeta
              */
-            // console.log("handleChangeStatus status", status);
-            // console.log("xhr.response fileWithMeta", fileWithMeta);
+            console.log("handleChangeStatus status", status);
+            console.log("xhr.response fileWithMeta", fileWithMeta);
             // console.log("xhr.response status[0].remove", status[0].remove);
-            // console.log('xhr.response result', result)
-            // console.log('xhr.response result.error', result.errors)
+            console.log('xhr.response result', result)
+            console.log('xhr.response result.error', result.errors)
           }
         }
       }

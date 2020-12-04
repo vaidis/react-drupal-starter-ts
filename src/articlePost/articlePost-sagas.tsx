@@ -66,7 +66,7 @@ function* getVocabularyWorker(payload: any) {
   console.log("getVocabularyWorker payload",payload);
   try {
     // const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
-    const response = yield call(api.get, endpoint.VOCABULARY(payload));
+    const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
     console.log("getVocabularyWorker response", response);
     yield put({ type: SET_VOCABULARY, payload: response.data });
     yield put({ type: SET_LOADED_TRUE })

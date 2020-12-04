@@ -46,8 +46,8 @@ export const ARTICLES = (params: any) => {
 }
 
 /** VOCABULARY */
-export const VOCABULARY = (vocabulary: string) => {
-  console.log("ARTICLE path", vocabulary);
+export const VOCABULARY = (vocabulary: any) => {
+  console.log("VOCABULARY name ", vocabulary);
   const url = `${BASE_API}/taxonomy_term/${vocabulary}`;
   console.log("VOCABULARY url", url);
   return url;
