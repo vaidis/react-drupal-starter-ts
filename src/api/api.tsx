@@ -3,13 +3,13 @@ import * as endpoint from './endpoints'
 
 /**
  * GET a csrf token
- * 
+ *
  * Differect token every time for anonymous users
  * The same token for loggen in users
- * 
+ *
  * used by: api functions
  * using: url of token endpoint
- * 
+ *
  * @return {string} The csrf token
  */
 export const getCsrfToken = async () => {
@@ -27,7 +27,7 @@ export const getCsrfToken = async () => {
 export const api = {
   /**
    * GET request
-   * 
+   *
    * @param {string} url - The backend url
    * @return {object}      The backend response
    */
@@ -51,10 +51,10 @@ export const api = {
         );
       });
   },
-  login: async function login(url:string, data:object) {
+  login: async function login(url: string, data: object) {
     /**
      * POST request for login
-     * 
+     *
      * @param {string} url  - The backend url
      * @param {object} data - The body of POST request
      * @return {object}       The backend response
@@ -79,7 +79,7 @@ export const api = {
         });
     }
   },
-  post: async function post(url:string, data:string, csrf_token:string) {
+  post: async function post(url: string, data: string, csrf_token: string) {
 
     /**
      * POST request
@@ -120,7 +120,7 @@ export const api = {
    * @param {string} csrf_token - From the logged in user
    * @return {object}             The backend response
    */
-  postFile: async function postFile(url:string, file:string, data:object, csrf_token:string) {
+  postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
       url: url,
@@ -152,7 +152,7 @@ export const api = {
    * @param {object} data - CSRF and logout tokens
    * @return {object}       The backend response
    */
-  logout: async function logout(url: string, tokens:any) {
+  logout: async function logout(url: string, tokens: any) {
     console.log("api.logout(url, tokens): ", decodeURI(url), tokens)
     const csrf_token: any = getCsrfToken()
     if (csrf_token !== "Connection Error") {
@@ -174,10 +174,10 @@ export const api = {
         });
     }
   },
-  patch: function patch(url:string, data:object) {
+  patch: function patch(url: string, data: object) {
     console.log("api.patch ", url, data);
   },
-  delete: function del(url:string, data:object) {
+  delete: function del(url: string, data: object) {
     console.log("api.delete ", url, data);
   }
 }

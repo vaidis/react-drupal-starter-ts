@@ -20,6 +20,7 @@ import {
 
 // -------------------------------------------- LOGIN
 export const userLoginRequest = (payload: IUserLoginRequest) => ({
+  type: USER_LOGIN_REQUEST,
   name: payload.name,
   pass: payload.pass,
 });

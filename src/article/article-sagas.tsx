@@ -17,7 +17,8 @@ import {
 import { api } from '../api/api';
 import * as endpoint from '../api/endpoints'
 
-function* getArticleWorker({ payload }) {
+function* getArticleWorker(payload: any) {
+  console.log("article-sagas.js getArticleWorker payload", payload);
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   try {

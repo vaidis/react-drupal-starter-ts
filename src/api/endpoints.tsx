@@ -13,7 +13,12 @@ export const STATUS = `${BASE}/user/login_status?_format=json`
 export const LOGOUT = `${BASE}/user/logout?_format=json`
 
 /** ARTICLE */
-export const ARTICLE = (path: string) => `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path}`
+export const ARTICLE = (path: any) => {
+  console.log("ARTICLE path", path);
+  const url = `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path.payload.path}`
+  console.log("ARTICLE url", url);
+  return url
+}
 export const POST_TAG = `${BASE_API}/taxonomy_term/tags`
 export const ARTICLE_POST_FILE = `${BASE_API}/node/article/field_image`
 export const ARTICLE_POST = `${BASE_API}/node/article`

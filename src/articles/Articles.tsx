@@ -1,29 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import { getArticles } from './articles-actions'
 import { setApiUrlParams } from '../api/api-actions'
 import { compareObjects } from '../utils/compareObjects'
-import Pager from '../pager/Pager'
-
-import { Dispatch } from "redux";
 import { AppState } from '../index-reducers'
+import Pager from '../pager/Pager'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Articles: React.FC<any> = ({
-  loading,
-  loaded,
-  articles,
-  storeParams,
-  dispatchSetApiUrlParams,
-  dispatchGetArticles,
-}) => {
-  let query: any = useQuery();
+const Articles: React.FC<any> = () => {
+
+  const loading = useSelector((state: AppState) => state.api.loading);
+  const loaded = useSelector((state: AppState) => state.api.loaded);
+  const articles = useSelector((state: AppState) => state.articles.data);
+  const storeParams = useSelector((state: AppState) => state.api.urlParams);
+  // const pager = useSelector((state: AppState) => state.api.pager);
+
+  var query: any = useQuery();
+  const dispatch = useDispatch();
 
    /**
    * @type {object} urlParams - URL parameters in the browser
@@ -47,12 +46,10 @@ const Articles: React.FC<any> = ({
      * @type {object} storeParams - parameter in the redux
      */
     if (!compareObjects(urlParams, storeParams)) {
-      dispatchSetApiUrlParams(urlParams)
-      dispatchGetArticles(urlParams)
+      dispatch(setApiUrlParams(urlParams))
+      dispatch(getArticles(urlParams))
     }
   }, [
-    dispatchSetApiUrlParams,
-    dispatchGetArticles,
     urlParams,
     storeParams,
   ]);
@@ -109,18 +106,4 @@ const Articles: React.FC<any> = ({
   );
 }
 
-
-const mapStateToProps = (state: AppState) => ({
-  loading: state.api.loading,
-  loaded: state.api.loaded,
-  articles: state.articles.data,
-  storeParams: state.api.urlParams,
-  pager: state.api.pager,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchSetApiUrlParams: (params: any) => dispatch(setApiUrlParams(params)),
-  dispatchGetArticles: (params: any) => dispatch(getArticles(params)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Articles)
+export default Articles;

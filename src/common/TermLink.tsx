@@ -7,10 +7,10 @@ interface IProps {
 
 /**
  * Render a taxonomy term link
- * 
+ *
  * Using: the name of the term
  * Used by: articles list and article page
- * 
+ *
  * @param {string} tag - term alias from backend
  * @return {string}      term link for frontend
 */
