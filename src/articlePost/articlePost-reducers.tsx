@@ -11,23 +11,26 @@ import {
   ADD_SELECTED,
 } from '../common/constants'
 
-const reducer = (state = {
-  images: [],
-  files: [],
-  tags: [],
-  title: '',
-  body: '',
-  selected: [],
-  vocabulary: [],
-}, action) => {
-
+const reducer = (
+  state = {
+    images: [],
+    files: [],
+    tags: [],
+    title: '',
+    body: '',
+    selected: [],
+    vocabulary: [],
+  },
+  action: any
+) => {
   switch (action.type) {
+
     case POST_ARTICLE:
-      console.group("POST_ARTICLE"); console.groupEnd();
+      console.log("POST_ARTICLE");
       return action.payload;
 
     case POST_ARTICLE_FILE:
-      console.group("POST_ARTICLE_FILE"); console.groupEnd();
+      console.log("POST_ARTICLE_FILE");
       return action.payload;
 
     case SET_ARTICLE_TITLE:
@@ -37,7 +40,7 @@ const reducer = (state = {
       return { ...state, body: action.payload }
 
     case SET_SELECTED:
-      console.group("SET_SELECTED", action.payload); console.groupEnd();
+      console.log("SET_SELECTED", action.payload);
       return {
         ...state,
         selected: action.payload
@@ -63,14 +66,14 @@ const reducer = (state = {
        * @param {string[]} terms - named 'value' instead of 'id'
        *     for the needs of the react-select
        */
-      const terms = action.payload.data.map(item => (
+      const terms = action.payload.data.map((item: any) => (
         { value: item.id, label: item.name }
       ))
-      console.group("SET_VOCABULARY", terms); console.groupEnd();
+      console.log("SET_VOCABULARY", terms);
       return { ...state, vocabulary: terms }
 
     case SET_ARTICLE_FILE:
-      console.group("SET_ARTICLE_FILE"); console.groupEnd();
+      console.log("SET_ARTICLE_FILE");
       const id = action.payload;
       const files = {
         ...state.images,

@@ -23,15 +23,13 @@ import {
 import { api } from '../api/api';
 import * as endpoint from '../api/endpoints'
 
-
-
-function* postArticleWorker({ payload }) {
+function* postArticleWorker(payload: any) {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   try {
     const csrf_token = yield call(api.get, endpoint.CSRF_TOKEN);
     // console.group("postTagWorker call api.get csrf_token", csrf_token.data);
-    const response = yield call(api.post, endpoint.ARTICLE_POST, payload, csrf_token.data);
+    const response = yield call(api.post, endpoint.ARTICLE_POST, payload.payload, csrf_token.data);
     console.group("postArticleWorker response", response);
     yield put({ type: SET_LOADED_TRUE })
   } catch (error) {
@@ -41,15 +39,18 @@ function* postArticleWorker({ payload }) {
   }
 }
 
-
-
-function* postArticleFileWorker({ payload }) {
+function* postArticleFileWorker(payload: any) {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   try {
     const csrf_token = yield call(api.get, endpoint.CSRF_TOKEN);
-    // console.group("postTagWorker call api.get csrf_token", csrf_token.data);
-    const response = yield call(api.postFile, endpoint.ARTICLE_POST_FILE, payload, csrf_token.data);
+    console.group("postArticleFileWorker payload", payload);
+    const response = yield call(
+      api.postFile,
+      endpoint.ARTICLE_POST_FILE,
+      payload.file,
+      payload.data, csrf_token.data
+    );
     console.group("postArticleFileWorker response", response);
     yield put({ type: SET_LOADED_TRUE })
   } catch (error) {
@@ -59,12 +60,12 @@ function* postArticleFileWorker({ payload }) {
   }
 }
 
-function* getVocabularyWorker({ payload }) {
+function* getVocabularyWorker(payload: any) {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   console.group("getVocabularyWorker",);
   try {
-    const response = yield call(api.get, endpoint.VOCABULARY(payload));
+    const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
     // console.log("getVocabularyWorker response", response);
     yield put({ type: SET_VOCABULARY, payload: response.data });
     yield put({ type: SET_LOADED_TRUE })
@@ -75,31 +76,38 @@ function* getVocabularyWorker({ payload }) {
   }
 }
 
-
-
-function* postTagWorker({ payload }) {
+function* postTagWorker(payload: any) {
+  console.group("--- postTagWorker payload", payload);
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   try {
+    /** get CSRF token */
     const csrf_token = yield call(api.get, endpoint.CSRF_TOKEN);
-    // console.group("postTagWorker call api.get csrf_token", csrf_token.data);
-    const response = yield call(api.post, endpoint.POST_TAG, payload, csrf_token.data);
-    console.group("postTagWorker call api.post response", response);
+    console.log("1/6 postTagWorker GET csrf_token", csrf_token.data);
 
+    /** post new term */
+    const response = yield call(api.post, endpoint.POST_TAG, payload.payload, csrf_token.data);
+    console.log("2/6 postTagWorker POST response", response);
+
+    /** get fresh vocabulary */
     const vocabulary = yield call(api.get, endpoint.VOCABULARY('tags'));
-    // console.log(".get(VOCABULARY('tags')).data", vocabulary.data);
+    console.log("3/6 postTagWorker SET_VOCABULARY", vocabulary);
     yield putResolve({ type: SET_VOCABULARY, payload: vocabulary.data })
 
-    const name = payload.data.attributes.name;
-    const id = vocabulary.data.data.find(item => {
+    /** add new term to selected terms */
+    const name = payload.payload.data.attributes.name;
+    console.log("4/6 postTagWorker name", name);
+
+    const id = vocabulary.data.data.find((item: any) => {
       return item.name === name
     })
     const body = { value: id.id, label: name }
-    console.log("body", body);
+    console.log("5/6 postTagWorker ADD_SELECTED body", body);
     yield put({ type: ADD_SELECTED, payload: body });
 
     const tags = { "type": "taxonomy_term--tags", "id": id.id }
     yield put({ type: ADD_ARTICLE_TAGS, payload: tags });
+    console.log("6/6 postTagWorker ADD_ARTICLE_TAGS tags", tags);
 
     yield put({ type: SET_LOADED_TRUE })
     console.groupEnd();

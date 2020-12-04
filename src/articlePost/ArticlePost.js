@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import Dropzone from 'react-dropzone-uploader'
 import CreatableSelect from 'react-select/creatable';
 import {
@@ -17,26 +17,19 @@ import {
 import * as endpoint from '../api/endpoints'
 import 'react-dropzone-uploader/dist/styles.css'
 
+const ArticlePost = () => {
 
-const ArticlePost = ({
-  loaded,
-  loading,
-  dispatchPostArticle,
-  dispatchPostTag,
-  dispatchSetArticleFile,
-  dispatchSetArticleTitle,
-  dispatchSetArticleBody,
-  dispatchSetArticleTags,
-  dispatchGetVocabulary,
-  dispatchSetSelected,
-  title,
-  files,
-  body,
-  tags,
-  selected,
-  vocabulary,
-  csrf_token,
-}) => {
+  const loaded= useSelector((state) => state.api.loaded);
+  const loading= useSelector((state) => state.api.loading);
+  const files= useSelector((state) => state.articlePost.files);
+  const title= useSelector((state) => state.articlePost.title);
+  const body= useSelector((state) => state.articlePost.body);
+  const tags= useSelector((state) => state.articlePost.tags);
+  const vocabulary= useSelector((state) => state.articlePost.vocabulary);
+  const selected= useSelector((state) => state.articlePost.selected);
+  const csrf_token= useSelector((state) => state.user.csrf_token);
+
+  const dispatch = useDispatch();
 
   /** used by the react-dropzone-uploader for the image field */
   const [error_upload, setErrorUpload] = React.useState('');
@@ -44,7 +37,6 @@ const ArticlePost = ({
   const handleSumbitForm = (e) => {
     e.preventDefault();
     /**
-     *
      * @type {object} payload - the body of POST request of
      *     an article that contains an image and at least one
      *     term. There is no validation yet
@@ -86,7 +78,7 @@ const ArticlePost = ({
      *
      * @param {object} payload - the POST request body
      */
-    dispatchPostArticle(payload)
+    dispatch(postArticle(payload));
   }
 
   /**
@@ -109,10 +101,10 @@ const ArticlePost = ({
     console.log("body", body)
     console.log("headers", headers)
     return { url, headers, body }
-
   }
 
   /**
+   *
    * react-dropzone-uploader POST response
    * Gets the id of the new image just stored in backend
    * api: https://github.com/fortana-co/react-dropzone-uploader/blob/8603b1892f568ef14f35ace5596c3f5b4b6381d3/docs/api.md
@@ -120,6 +112,7 @@ const ArticlePost = ({
    * @param {object} xhr - The fetcher
    * @param {object} fileWithMeta - file callback functions
    * @param {object} status - response status
+   *
    */
   const handleChangeStatus = ({ xhr }, fileWithMeta, status) => {
     if (xhr) {
@@ -129,7 +122,7 @@ const ArticlePost = ({
           const result = JSON.parse(xhr.response);
           console.log('xhr.response', result)
           if (result.hasOwnProperty('data')) {
-            dispatchSetArticleFile(result.data.id)
+            dispatch(setArticleFile(result.data.id))
           }
           if (result.hasOwnProperty('errors')) {
             status[0].remove()
@@ -151,10 +144,8 @@ const ArticlePost = ({
 
   React.useEffect(() => {
     /** get a fresh vocabulary to fill the react-select options list */
-    dispatchGetVocabulary('tags')
-  }, [
-    dispatchGetVocabulary,
-  ]);
+    dispatch(getVocabulary('tags'));
+  }, []);
 
   const tagPostBodyitem = (item) => {
     return (
@@ -172,19 +163,21 @@ const ArticlePost = ({
    */
   const handleSelectOnChange = (value) => {
     console.log("handleSelectOnChange value", JSON.stringify(value))
-    dispatchSetSelected(value)
+    dispatch(setSelected(value))
     if (value) {
       /**
        * @type {string[]} itds - format: {1234},{5678},{9012}
        */
       const ids = value.map(x => tagPostBodyitem(x.value));
 
-      dispatchSetArticleTags(ids)
+      dispatch(setArticleTags(ids));
     }
   }
 
   /**
-   * called from react-select when post a new tag
+   * POST new tag
+   *
+   * Used by: react-select component
    *
    * @param {string} name - The name of the tag
    * @dispatch {object} body - The body of POST request
@@ -199,7 +192,7 @@ const ArticlePost = ({
         }
       }
     }
-    dispatchPostTag(body)
+    dispatch(postTag(body));
   }
 
 
@@ -214,7 +207,7 @@ const ArticlePost = ({
           type="text"
           name="title"
           placeholder="Title"
-          onChange={(event) => dispatchSetArticleTitle(event.target.value)}
+          onChange={(event) => dispatch(setArticleTitle(event.target.value))}
           value={title || ''}
           style={{ margin: '10px 0px' }}
         />
@@ -236,7 +229,7 @@ const ArticlePost = ({
           type="text"
           name="body"
           placeholder="Body"
-          onChange={(event) => dispatchSetArticleBody(event.target.value)}
+          onChange={(event) => dispatch(setArticleBody(event.target.value))}
           value={body || ''}
           style={{ margin: '10px 0px' }}
         ></textarea>
@@ -270,29 +263,16 @@ const ArticlePost = ({
   )
 }
 
+// const mapDispatchToProps = dispatch => ({
+//   dispatchPostArticle: payload => dispatch(postArticle(payload)),
+//   dispatchPostTag: payload => dispatch(postTag(payload)),
+//   dispatchSetArticleFile: payload => dispatch(setArticleFile(payload)),
+//   dispatchSetArticleTitle: payload => dispatch(setArticleTitle(payload)),
+//   dispatchSetArticleBody: payload => dispatch(setArticleBody(payload)),
+//   dispatchSetArticleTags: payload => dispatch(setArticleTags(payload)),
+//   dispatchGetVocabulary: payload => dispatch(getVocabulary(payload)),
+//   dispatchSetSelected: payload => dispatch(setSelected(payload)),
+//   dispatchAddSelected: payload => dispatch(addSelected(payload)),
+// })
 
-const mapDispatchToProps = dispatch => ({
-  dispatchPostArticle: payload => dispatch(postArticle(payload)),
-  dispatchPostTag: payload => dispatch(postTag(payload)),
-  dispatchSetArticleFile: payload => dispatch(setArticleFile(payload)),
-  dispatchSetArticleTitle: payload => dispatch(setArticleTitle(payload)),
-  dispatchSetArticleBody: payload => dispatch(setArticleBody(payload)),
-  dispatchSetArticleTags: payload => dispatch(setArticleTags(payload)),
-  dispatchGetVocabulary: payload => dispatch(getVocabulary(payload)),
-  dispatchSetSelected: payload => dispatch(setSelected(payload)),
-  dispatchAddSelected: payload => dispatch(addSelected(payload)),
-})
-
-const mapStateToProps = (state) => ({
-  loaded: state.api.loaded,
-  loading: state.api.loading,
-  files: state.articlePost.files,
-  title: state.articlePost.title,
-  body: state.articlePost.body,
-  tags: state.articlePost.tags,
-  vocabulary: state.articlePost.vocabulary,
-  selected: state.articlePost.selected,
-  csrf_token: state.user.csrf_token,
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ArticlePost);
+export default ArticlePost;

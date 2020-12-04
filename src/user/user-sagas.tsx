@@ -28,7 +28,7 @@ import { ILoginRersponse } from './user-types'
  * Login the user and save the response to redux store
  *
  * Using:  api.login and credentials
- * 
+ *
  * @param {String} name    Username
  * @param {String} pass    Password
  */
@@ -57,7 +57,7 @@ export function* userLoginWatcher() {
 
 /**
  * Logout the user
- * 
+ *
  * Using: api.logout, csrf and logout tokens
  */
 function* UserLogoutWorker() {

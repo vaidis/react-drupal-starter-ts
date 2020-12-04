@@ -1,8 +1,8 @@
 import { IParams } from './api-types'
 
 /** BACKEND */
-// export const BASE = "http://192.168.56.101"
-export const BASE = "https://stevaidis.mywire.org:444"
+export const BASE = "http://192.168.1.111:444"
+// export const BASE = "https://stevaidis.mywire.org:444"
 export const BASE_API = `${BASE}/jsonapi`
 export const CSRF_TOKEN = `${BASE}/session/token`
 
@@ -17,7 +17,7 @@ export const ARTICLE = (path: any) => {
   console.log("ARTICLE path", path);
   const url = `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path.payload.path}`
   console.log("ARTICLE url", url);
-  return url
+  return url;
 }
 export const POST_TAG = `${BASE_API}/taxonomy_term/tags`
 export const ARTICLE_POST_FILE = `${BASE_API}/node/article/field_image`
@@ -46,4 +46,9 @@ export const ARTICLES = (params: any) => {
 }
 
 /** VOCABULARY */
-export const VOCABULARY = (vocabulary: string) => `${BASE_API}/taxonomy_term/${vocabulary}`
+export const VOCABULARY = (vocabulary: string) => {
+  console.log("ARTICLE path", vocabulary);
+  const url = `${BASE_API}/taxonomy_term/${vocabulary}`;
+  console.log("VOCABULARY url", url);
+  return url;
+}

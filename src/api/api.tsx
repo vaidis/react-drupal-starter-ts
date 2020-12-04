@@ -79,16 +79,15 @@ export const api = {
         });
     }
   },
+  /**
+   * POST request
+   *
+   * @param {string} url        - The backend url endpoint
+   * @param {object} data       - The body of POST request
+   * @param {string} csrf_token - CSRF token of the logged in user from redux store
+   * @return {object}             The backend response
+   */
   post: async function post(url: string, data: string, csrf_token: string) {
-
-    /**
-     * POST request
-     * 
-     * @param {string} url        - The backend url endpoint
-     * @param {object} data       - The body of POST request
-     * @param {string} csrf_token - CSRF token of the logged in user from redux store
-     * @return {object}             The backend response
-     */
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
       url: url,
@@ -113,13 +112,14 @@ export const api = {
   },
   /**
    * POST request for uploading files
-   * 
+   *
    * @param {string} url        - The backend url
    * @param {string} file       - The filename
    * @param {object} data       - The body of POST request
    * @param {string} csrf_token - From the logged in user
    * @return {object}             The backend response
    */
+  // postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
   postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
@@ -147,7 +147,7 @@ export const api = {
   },
   /**
    * POST logout
-   * 
+   *
    * @param {string} url  - The backend url
    * @param {object} data - CSRF and logout tokens
    * @return {object}       The backend response
