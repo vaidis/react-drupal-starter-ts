@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom"
-import { connect } from 'react-redux';
+import { useSelector } from "react-redux";
 import { AppState } from './../index-reducers'
 
 interface IProps {
-  user?: any;
   to: any;
   label: any;  
 }
@@ -21,10 +20,11 @@ interface IProps {
  * @return {string}         html of the menu item
  */
 const PrivateRoute: React.FC<IProps> = ({
-  user,
   to,
   label,
 }) => {
+
+  const user = useSelector((state: AppState) => state.user);
   const isAuthenticated = user.current_user.uid === 0 ? false : true
 
   if (isAuthenticated) {
@@ -34,8 +34,4 @@ const PrivateRoute: React.FC<IProps> = ({
   }
 };
 
-const mapStateToProps = (state: AppState) => ({
-  user: state.user,
-})
-
-export default connect(mapStateToProps, null)(PrivateRoute);
+export default PrivateRoute;
