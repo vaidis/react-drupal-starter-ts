@@ -13,7 +13,7 @@ export interface IApiState {
     search: string;
     terms: string[];
     urlParams: string | object;
-    pager: string | object;
+    pager: any;
 }
 
 /**

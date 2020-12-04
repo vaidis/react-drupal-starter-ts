@@ -23,7 +23,8 @@ const initialState = {
   logout_token: '',
 }
 
-const reducer: Reducer<IUserState, IUserActions> = (
+// const reducer: Reducer<IUserState, IUserActions> = (
+const reducer: Reducer<IUserState, any> = (
   state = initialState,
   action: IUserActions
 ) => {

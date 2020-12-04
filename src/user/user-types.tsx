@@ -45,7 +45,7 @@ export interface ILogoutProps {
  * Interfaces for User actions
  */
 export interface IUserLoginRequest {
-  type: typeof USER_LOGIN_REQUEST;
+  type?: typeof USER_LOGIN_REQUEST;
   name: string;
   pass: string;
 };

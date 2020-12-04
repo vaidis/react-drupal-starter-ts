@@ -8,12 +8,14 @@ import { setApiUrlParams } from '../api/api-actions'
 import { compareObjects } from '../utils/compareObjects'
 import Pager from '../pager/Pager'
 
+import { Dispatch } from "redux";
+import { AppState } from '../index-reducers'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Articles = ({
+const Articles: React.FC<any> = ({
   loading,
   loaded,
   articles,
@@ -21,12 +23,12 @@ const Articles = ({
   dispatchSetApiUrlParams,
   dispatchGetArticles,
 }) => {
-  let query = useQuery();
+  let query: any = useQuery();
 
    /**
    * @type {object} urlParams - URL parameters in the browser
    */
-  const urlParams = {
+  const urlParams: any = {
     terms: query.get('terms') || '',
     search: query.get('search') || '',
     offset: parseInt(query.get('offset')) || 0,
@@ -63,12 +65,12 @@ const Articles = ({
       {
         !loading && loaded && articles
           ? (
-            articles.map((item, i) => {
+            articles.map((item: any, i: number) => {
 
               /** terms */
               // console.log("item.field_tags", item.field_tags)
               let terms = ''
-              terms = item.field_tags.map((term, i) => {
+              terms = item.field_tags.map((term: any, i: number) => {
                 return (
                   <div key={i}>
                     <Link to={"/?terms=" + term.name}>{term.name}</Link>
@@ -77,11 +79,11 @@ const Articles = ({
               })
 
               /** image */
-              let image = ''
-              let imageobject = ''
+              var image: any = ''
+              var imageobject: any = ''
               if (item.field_image.image_style_uri) {
                 imageobject = item.field_image.image_style_uri;
-                imageobject.forEach(function (item) {
+                imageobject.forEach(function (item: any) {
                   if (item.thumbnail) {
                     image = item.thumbnail
                   }
@@ -108,7 +110,7 @@ const Articles = ({
 }
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   loading: state.api.loading,
   loaded: state.api.loaded,
   articles: state.articles.data,
@@ -116,9 +118,9 @@ const mapStateToProps = (state) => ({
   pager: state.api.pager,
 })
 
-const mapDispatchToProps = dispatch => ({
-  dispatchSetApiUrlParams: params => dispatch(setApiUrlParams(params)),
-  dispatchGetArticles: params => dispatch(getArticles(params)),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchSetApiUrlParams: (params: any) => dispatch(setApiUrlParams(params)),
+  dispatchGetArticles: (params: any) => dispatch(getArticles(params)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Articles)

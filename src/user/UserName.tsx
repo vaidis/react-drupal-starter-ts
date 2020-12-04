@@ -1,31 +1,22 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import UserLogout from './UserLogout'
 import { AppState } from '../index-reducers'
+import UserLogout from './UserLogout'
 
-/** 
- * Issue: 
- * For IProps if typescript interface used it throws an error from Header.tsx
- * "Property 'user' is missing in type '{}' but required in type 'Pick<IProps, "user">'.  TS2741"
- * 
- * Solution: 
- * use ConnectedProps according to redux manual
- * https://redux.js.org/recipes/usage-with-typescript 
- */
-type PropsFromRedux = ConnectedProps<typeof connector>
-type IProps = PropsFromRedux & {name?: string; uid?: number}
 
-const UserName: React.FC<IProps> = ({ name, uid }) => {
-  console.log("user", name)
+const UserName: React.FC = () => {
+  const user = useSelector((state: AppState) => state.user.current_user);
+  console.log("user", user.name)
+
   return (
     <div style={{ fontStyle: "italic" }}>
       Hello
       {
-        uid !== 0
+        user.uid !== 0
           ? <div>
-            <Link to="/user/profile"> {name} </Link>
+            <Link to="/user/profile"> {user.name} </Link>
             <UserLogout />
           </div>
           : ' Anonymous'
@@ -34,9 +25,4 @@ const UserName: React.FC<IProps> = ({ name, uid }) => {
   );
 }
 
-const mapStateToProps = (state: AppState) => ({
-  user: state.user.current_user,
-})
-
-const connector = connect(mapStateToProps, null)
-export default connector(UserName)
+export default UserName;

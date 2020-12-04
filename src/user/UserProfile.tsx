@@ -1,16 +1,12 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from "react-redux";
 import { AppState } from '../index-reducers'
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-type IProps = PropsFromRedux & {name?: string; uid?: number}
 
 /**
  * Renders a page that shows the user data
- * 
- * @param {String} user   The current user from redux store
  */
-const UserProfile: React.FC<IProps> = ({ user }) => {
+const UserProfile: React.FC = () => {
+  const user = useSelector((state: AppState) => state.user);
   return (
     <div>
       <h2>User Profile</h2>
@@ -23,9 +19,4 @@ const UserProfile: React.FC<IProps> = ({ user }) => {
   );
 }
 
-const mapStateToProps = (state: AppState) => ({
-  user: state.user,
-})
-
-const connector = connect(mapStateToProps, null)
-export default connector(UserProfile)
+export default UserProfile;

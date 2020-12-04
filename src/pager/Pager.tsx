@@ -1,38 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { useSelector } from "react-redux";
+
 import PagerLink from './PagerLink'
 import { AppState } from './../index-reducers'
 
-interface Props {  
-  pager: {
-    first: number;
-    prev: number;
-    next: number;
-    last:  number;
-  };
-  urlParams: {
-    items: number;
-    offset: number;
-    page: number;
-    search: string;
-    terms: string[];
-  };
-}
-
 /**
- * Render Pager
+ * Render the Pager for Articles
  * 
  * Used by: /src/Articles/Articles.tsx
- * 
  * Using: drupal backend response saved in redux store
  * 
- * @param {Object} pager      - Drupal pager
- * @param {String} urlParams  - Current URL parameters
  */
-const Pager: React.FC<Props> = ({
-  pager,
-  urlParams,
-}) => {
+const Pager: React.FC = () => {
+
+  const urlParams = useSelector((state: AppState) => state.api.urlParams);
+  const pager = useSelector((state: AppState) => state.api.pager);
+
   console.log(urlParams)
   return (
     <div>
@@ -68,10 +51,4 @@ const Pager: React.FC<Props> = ({
   );
 }
 
-const mapStateToProps = (state: AppState) => ({
-  urlParams: state.api.urlParams,
-  pager: state.api.pager,
-})
-
-
-export default connect(mapStateToProps, null)(Pager)
+export default Pager;
