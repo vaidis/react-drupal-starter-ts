@@ -29,8 +29,8 @@ export interface IAddSelected {
 }
 
 export interface IGetVocabulary {
-    type: typeof GET_VOCABULARY;
-    payload: any;
+    type?: typeof GET_VOCABULARY;
+    payload?: any;
 }
 
 export interface ISetVocabulary {

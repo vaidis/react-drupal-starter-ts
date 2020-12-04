@@ -63,10 +63,11 @@ function* postArticleFileWorker(payload: any) {
 function* getVocabularyWorker(payload: any) {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
-  console.group("getVocabularyWorker",);
+  console.log("getVocabularyWorker payload",payload);
   try {
-    const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
-    // console.log("getVocabularyWorker response", response);
+    // const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
+    const response = yield call(api.get, endpoint.VOCABULARY(payload));
+    console.log("getVocabularyWorker response", response);
     yield put({ type: SET_VOCABULARY, payload: response.data });
     yield put({ type: SET_LOADED_TRUE })
   } catch (error) {
