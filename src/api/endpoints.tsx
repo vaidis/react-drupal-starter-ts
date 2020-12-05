@@ -1,6 +1,5 @@
 /** BACKEND */
 export const BASE = "http://192.168.1.111:444"
-// export const BASE = "https://stevaidis.mywire.org:444"
 export const BASE_API = `${BASE}/jsonapi`
 export const CSRF_TOKEN = `${BASE}/session/token`
 
