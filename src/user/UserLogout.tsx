@@ -4,7 +4,6 @@ import { userLogoutRequest } from './user-actions'
 import { Link } from "react-router-dom";
 
 import { AppState } from '../index-reducers'
-import { ILogoutProps } from './user-types'
 
 /**
  * Logout user

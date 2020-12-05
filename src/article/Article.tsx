@@ -18,7 +18,10 @@ const Article: React.FC = () => {
   React.useEffect(() => {
     console.log("path", path)
     dispatch(getArticle(path))
-  }, [dispatch]);
+  }, [
+    path,
+    dispatch
+  ]);
 
   return (
     <div>
@@ -38,7 +41,7 @@ const Article: React.FC = () => {
               <div>
                 {
                   article.data[0].field_tags.lenght &&
-                  article.data[0].field_tags.map((tag:string, i:number) => {
+                  article.data[0].field_tags.map((tag: string, i: number) => {
                     return (
                       <span key={i}>
                         <TermLink name={tag} />

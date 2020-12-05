@@ -47,6 +47,7 @@ const Articles: React.FC<any> = () => {
       dispatch(getArticles(urlParams))
     }
   }, [
+    dispatch,
     urlParams,
     storeParams,
   ]);

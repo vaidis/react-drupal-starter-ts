@@ -12,7 +12,6 @@ import {
   setArticleTitle,
   getVocabulary,
   setSelected,
-  addSelected,
 } from '../articlePost/articlePost-actions'
 
 import * as endpoint from '../api/endpoints'
@@ -146,7 +145,7 @@ const ArticlePost: React.FC = () => {
     /** get a fresh vocabulary to fill the react-select options list */
     const vocabName: any = "tags";
     dispatch(getVocabulary(vocabName));
-  }, []);
+  }, [dispatch]);
 
   const tagPostBodyitem = (item: any) => {
     return (
