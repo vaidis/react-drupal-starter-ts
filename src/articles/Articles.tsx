@@ -14,13 +14,10 @@ function useQuery() {
 }
 
 const Articles: React.FC<any> = () => {
-
   const loading = useSelector((state: AppState) => state.api.loading);
   const loaded = useSelector((state: AppState) => state.api.loaded);
   const articles = useSelector((state: AppState) => state.articles.data);
   const storeParams = useSelector((state: AppState) => state.api.urlParams);
-  // const pager = useSelector((state: AppState) => state.api.pager);
-
   var query: any = useQuery();
   const dispatch = useDispatch();
 
@@ -54,8 +51,6 @@ const Articles: React.FC<any> = () => {
     storeParams,
   ]);
 
-  // console.log("Articles", articles)
-
   return (
     <div>
       <p>{urlParams.terms !== '' && "articles with terms: " + urlParams.terms}</p>
@@ -64,7 +59,7 @@ const Articles: React.FC<any> = () => {
           ? (
             articles.map((item: any, i: number) => {
 
-              /** terms */
+              /** render terms */
               // console.log("item.field_tags", item.field_tags)
               let terms = ''
               terms = item.field_tags.map((term: any, i: number) => {
@@ -75,7 +70,7 @@ const Articles: React.FC<any> = () => {
                 )
               })
 
-              /** image */
+              /** render image */
               var image: any = ''
               var imageobject: any = ''
               if (item.field_image.image_style_uri) {
@@ -87,7 +82,7 @@ const Articles: React.FC<any> = () => {
                 })
               }
 
-              /** article */
+              /** render article */
               return (
                 <div key={i} style={{ marginBottom: "20px" }}>
                   <Link to={item.path.alias}>

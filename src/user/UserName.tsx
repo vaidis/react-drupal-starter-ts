@@ -7,7 +7,6 @@ import UserLogout from './UserLogout'
 
 const UserName: React.FC = () => {
   const user = useSelector((state: AppState) => state.user.current_user);
-  console.log("user", user.name)
 
   return (
     <div style={{ fontStyle: "italic" }}>

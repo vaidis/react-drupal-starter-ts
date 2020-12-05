@@ -64,12 +64,11 @@ const reducer = (
     case SET_VOCABULARY:
       /**
        * @param {string[]} terms - named 'value' instead of 'id'
-       *     for the needs of the react-select
+       *     for the needs of the react-select component
        */
       const terms = action.payload.data.map((item: any) => (
         { value: item.id, label: item.name }
       ))
-      console.log("SET_VOCABULARY", terms);
       return { ...state, vocabulary: terms }
 
     case SET_ARTICLE_FILE:

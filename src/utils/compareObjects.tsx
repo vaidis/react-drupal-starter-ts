@@ -1,14 +1,13 @@
-function isObject(object) {
+function isObject(object: object) {
   return object != null && typeof object === 'object';
 }
-
 
 // Compare Objects -----------------------------------
 // from:
 // https://dmitripavlutin.com/how-to-compare-objects-in-javascript/
 // https://github.com/panzerdp/dmitripavlutin.com/blob/master/content/posts/083-compare-objects/index.md
 //
-export function compareObjects(object1, object2) {
+export function compareObjects(object1: any, object2: any) {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
   if (keys1.length !== keys2.length) {
@@ -27,6 +26,3 @@ export function compareObjects(object1, object2) {
   }
   return true;
 }
-
-
-// export default CompareObjects;

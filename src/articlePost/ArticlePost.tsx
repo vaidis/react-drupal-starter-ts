@@ -132,11 +132,10 @@ const ArticlePost: React.FC = () => {
              * for some reason, the fileWithMeta gives the data of status
              * and the status gives the data of the fileWithMeta
              */
-            console.log("handleChangeStatus status", status);
-            console.log("xhr.response fileWithMeta", fileWithMeta);
-            // console.log("xhr.response status[0].remove", status[0].remove);
-            console.log('xhr.response result', result)
-            console.log('xhr.response result.error', result.errors)
+            // console.log("handleChangeStatus status", status);
+            // console.log("xhr.response fileWithMeta", fileWithMeta);
+            // console.log('xhr.response result', result)
+            // console.log('xhr.response result.error', result.errors)
           }
         }
       }
@@ -197,8 +196,6 @@ const ArticlePost: React.FC = () => {
     dispatch(postTag(body));
   }
 
-
-
   return (
     <div>
       <form
@@ -228,7 +225,6 @@ const ArticlePost: React.FC = () => {
         />
         {error_upload}<br />
         <textarea
-          // type="text"
           name="body"
           placeholder="Body"
           onChange={(event: any) => dispatch(setArticleBody(event.target.value))}

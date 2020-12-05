@@ -23,7 +23,6 @@ const initialState = {
   logout_token: '',
 }
 
-// const reducer: Reducer<IUserState, IUserActions> = (
 const reducer: Reducer<IUserState, any> = (
   state = initialState,
   action: IUserActions
@@ -31,7 +30,6 @@ const reducer: Reducer<IUserState, any> = (
   switch (action.type) {
 
     case USER_SET_DATA:
-      // console.log("USER_SET_DATA", action)
       return {
         ...state,
         current_user: action.payload.current_user,
@@ -40,7 +38,6 @@ const reducer: Reducer<IUserState, any> = (
       };
 
     case USER_LOGOUT_SUCCESS:
-      // console.log("USER_LOGOUT_SUCCESS")
       return initialState;
 
     default:

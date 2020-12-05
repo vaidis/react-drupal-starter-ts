@@ -3,6 +3,9 @@ import {
     SET_ARTICLE,
 } from '../common/constants'
 
+/**
+ *  used by: actions
+ */
 export interface IGetArticle {
     type: typeof GET_ARTICLE;
     payload: any;
@@ -13,7 +16,9 @@ export interface ISetArticle {
     payload: any;
 }
 
-/** used by the reducer */
+/**
+ *  used by: reducer
+ */
 export type IArticleActions =
     IGetArticle
     | ISetArticle

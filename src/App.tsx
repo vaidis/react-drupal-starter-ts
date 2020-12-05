@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import RouteProtected from './utils/RouteProtected';
 import Header from './header/Header'
 import UserLogin from './user/UserLogin'
 import UserProfile from './user/UserProfile'
@@ -8,10 +9,8 @@ import Articles from './articles/Articles'
 import Article from './article/Article'
 import ArticlePost from './articlePost/ArticlePost'
 
-import RouteProtected from './utils/RouteProtected';
 
-// const App: React.SFC<{}> = () => <CharacterContainer />;
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Header />

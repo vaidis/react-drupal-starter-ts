@@ -7,7 +7,7 @@ import { getArticle } from './article-actions'
 import * as endpoint from '../api/endpoints'
 import TermLink from '../common/TermLink'
 
-const Article = () => {
+const Article: React.FC = () => {
 
   const loaded = useSelector((state: AppState) => state.api.loaded);
   const loading = useSelector((state: AppState) => state.api.loading);
@@ -18,7 +18,7 @@ const Article = () => {
   React.useEffect(() => {
     console.log("path", path)
     dispatch(getArticle(path))
-  }, [path]);
+  }, [dispatch]);
 
   return (
     <div>

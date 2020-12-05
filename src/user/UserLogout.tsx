@@ -7,10 +7,10 @@ import { AppState } from '../index-reducers'
 import { ILogoutProps } from './user-types'
 
 /**
- * Logout user 
- * 
+ * Logout user
+ *
  * Using: csrf and logout tokens
- * 
+ *
  * @param {Number} uid                        the id of the current user
  * @param {Funtion} dispatchUserLogoutRequest tell saga worker to logout
  */

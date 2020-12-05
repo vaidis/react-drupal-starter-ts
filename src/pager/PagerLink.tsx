@@ -11,26 +11,26 @@ interface IProps {
 
 /**
  * Renders a pager item
- * 
+ *
  * @param {string} to        - Destination url
  * @param {string} title     - Menu item label
  * @param {string} urlParams   Current URL parameters
- * 
+ *
  * @example
- * 
- *     <PagerLink 
- *        to={2} 
- *        title={'NEXT'} 
+ *
+ *     <PagerLink
+ *        to={2}
+ *        title={'NEXT'}
  *        urlParams={
- *          items:0, 
- *          limit: 10, 
- *          offset:0, 
- *          page:1, 
- *          search: "", 
+ *          items:0,
+ *          limit: 10,
+ *          offset:0,
+ *          page:1,
+ *          search: "",
  *          terms: "some tag"
- *        } 
+ *        }
  *     />
- * 
+ *
  */
 const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
 
@@ -52,4 +52,3 @@ const mapStateToProps = (state: AppState) => ({
 })
 
 export default connect(mapStateToProps, null)(PagerLink)
-               

@@ -5,15 +5,15 @@ import { AppState } from './../index-reducers'
 
 interface IProps {
   to: any;
-  label: any;  
+  label: any;
 }
 
 /**
- * Render or not the menu item according 
+ * Render or not the menu item according
  * the user if it is logged in or not
- * 
+ *
  * Used by menu.tsx
- * 
+ *
  * @param {string} user   - user object from redux state
  * @param {string} to     - destination url
  * @param {string} label  - what the user see

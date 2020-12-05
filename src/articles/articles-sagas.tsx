@@ -24,8 +24,8 @@ import * as endpoint from '../api/endpoints'
  * @param {object} links - Pager data from backend
  * @returns {object} pager - Stored in store.api.pager
  */
-const createPagerObject = (links) => {
-  let pager = {
+const createPagerObject = (links: any) => {
+  var pager: any = {
     first: '',
     prev: '',
     next: '',
@@ -43,7 +43,7 @@ const createPagerObject = (links) => {
   return pager
 }
 
-function* getArticlesWorker({ payload }) {
+function* getArticlesWorker({ payload }: any) {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
   try {

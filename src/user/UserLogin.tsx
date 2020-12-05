@@ -7,7 +7,7 @@ import {ICredentials} from './user-types'
 
 /**
  * Login Form
- * 
+ *
  * @param {Function} dispatchUserLoginRequest dispatch action to start saga worker login
  */
   const UserLogin: React.FC = () => {

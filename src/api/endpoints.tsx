@@ -1,5 +1,3 @@
-import { IParams } from './api-types'
-
 /** BACKEND */
 export const BASE = "http://192.168.1.111:444"
 // export const BASE = "https://stevaidis.mywire.org:444"
@@ -13,12 +11,7 @@ export const STATUS = `${BASE}/user/login_status?_format=json`
 export const LOGOUT = `${BASE}/user/logout?_format=json`
 
 /** ARTICLE */
-export const ARTICLE = (path: any) => {
-  console.log("ARTICLE path", path);
-  const url = `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path.payload.path}`
-  console.log("ARTICLE url", url);
-  return url;
-}
+export const ARTICLE = (path: any) => `${BASE_API}/node/article?include=field_image,field_tags,uid&filter[field_path][value]=/article/${path.payload.path}`
 export const POST_TAG = `${BASE_API}/taxonomy_term/tags`
 export const ARTICLE_POST_FILE = `${BASE_API}/node/article/field_image`
 export const ARTICLE_POST = `${BASE_API}/node/article`
@@ -46,9 +39,4 @@ export const ARTICLES = (params: any) => {
 }
 
 /** VOCABULARY */
-export const VOCABULARY = (vocabulary: any) => {
-  console.log("VOCABULARY name ", vocabulary);
-  const url = `${BASE_API}/taxonomy_term/${vocabulary}`;
-  console.log("VOCABULARY url", url);
-  return url;
-}
+export const VOCABULARY = (vocabulary: any) => `${BASE_API}/taxonomy_term/${vocabulary}`;

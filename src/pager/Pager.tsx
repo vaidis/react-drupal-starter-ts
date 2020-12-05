@@ -6,17 +6,15 @@ import { AppState } from './../index-reducers'
 
 /**
  * Render the Pager for Articles
- * 
+ *
  * Used by: /src/Articles/Articles.tsx
  * Using: drupal backend response saved in redux store
- * 
+ *
  */
 const Pager: React.FC = () => {
-
   const urlParams = useSelector((state: AppState) => state.api.urlParams);
   const pager = useSelector((state: AppState) => state.api.pager);
 
-  console.log(urlParams)
   return (
     <div>
       <button type="button" disabled={!pager.first}>

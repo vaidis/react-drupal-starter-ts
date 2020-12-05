@@ -17,18 +17,6 @@ export interface IApiState {
 }
 
 /**
- * Used by API endpoints
- */
-export interface IParams {
-    items: number;
-    limit: number;
-    offset: number;
-    page: string;
-    search: string;
-    terms: string[];
-}
-
-/**
  * Used by API Actions
  */
 export interface ISetLoadingOn {
@@ -57,7 +45,9 @@ export interface ISetLoadedFalse {
     type: typeof SET_LOADED_FALSE;
 }
 
-/** used by the reducer */
+/**
+ * Used by reducer
+ */
 export type IApiActions =
     ISetLoadingOn
     | ISetLoadingOff

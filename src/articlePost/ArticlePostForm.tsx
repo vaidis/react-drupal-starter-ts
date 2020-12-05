@@ -1,11 +1,18 @@
 import React from 'react'
 
-const ArticlePost: React.FC = () => {
+const ArticlePostForm: React.FC = (props) => {
+
+    // const dispatch = props.dispatch;
+    // const handleSumbitForm = props.handleSumbitForm;
+    // const getUploadParams = props.getUploadParams;
+    // const handleChangeStatus = props.handleChangeStatus;
+    // const vocabulary = props.vocabulary;
+    // const selected = props.selected;
+    // const handleSelectOnChange = props.handleSelectOnChange;
+    // const handleSelectOnCreate = props.handleSelectOnCreate;
 
     return (
         <div>
-            FORM
-
           {/* <form
             onSubmit={handleSumbitForm}
             style={{ margin: '10px' }}
@@ -14,7 +21,7 @@ const ArticlePost: React.FC = () => {
               type="text"
               name="title"
               placeholder="Title"
-              onChange={(event) => dispatch(setArticleTitle(event.target.value))}
+              onChange={(event) => props.dispatch(setArticleTitle(event.target.value))}
               value={title || ''}
               style={{ margin: '10px 0px' }}
             />
@@ -32,7 +39,6 @@ const ArticlePost: React.FC = () => {
             />
             {error_upload}<br />
             <textarea
-              type="text"
               name="body"
               placeholder="Body"
               onChange={(event) => dispatch(setArticleBody(event.target.value))}
@@ -55,18 +61,9 @@ const ArticlePost: React.FC = () => {
               value="Submit"
               style={{ margin: '10px 0px' }}
             />
-          </form>
-          <div style={{ backgroundColor: "#f4f4f4", padding: "10px" }}>
-            <code >
-              <div><strong>store.articlePost.title:</strong> {JSON.stringify(title)}</div><br />
-              <div><strong>store.articlePost.files:</strong> {JSON.stringify(files)}</div><br />
-              <div><strong>store.articlePost.body:</strong> {JSON.stringify(body)}</div><br />
-              <div><strong>store.articlePost.tags:</strong> {JSON.stringify(tags)}</div><br />
-              <div><strong>store.articlePost.selected:</strong> {JSON.stringify(selected)}</div><br />
-            </code>
-          </div> */}
+          </form> */}
         </div>
       )
 }
 
-export default ArticlePost;
+export default ArticlePostForm;

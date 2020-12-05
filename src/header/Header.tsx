@@ -6,11 +6,10 @@ import UserName from '../user/UserName'
 
 /**
  * Renders the site header
- * 
+ *
  * Using: Logo, Menu, UserName
- * 
- * Used by App.tsx
- * 
+ * Used by: App.tsx
+ *
  * @return {string} HTML element of menu
  */
 const Header: React.FC = () => {
@@ -24,4 +23,3 @@ const Header: React.FC = () => {
 }
 
 export default Header;
-

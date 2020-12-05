@@ -80,7 +80,7 @@ export const api = {
     }
   },
   /**
-   * POST request
+   * POST request for new articles
    *
    * @param {string} url        - The backend url endpoint
    * @param {object} data       - The body of POST request
@@ -119,7 +119,6 @@ export const api = {
    * @param {string} csrf_token - From the logged in user
    * @return {object}             The backend response
    */
-  // postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
   postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
@@ -133,7 +132,6 @@ export const api = {
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "en-US,en;q=0.9",
         "Connection": "keep-alive",
-
       },
       withCredentials: true,
       timeout: 2000,
