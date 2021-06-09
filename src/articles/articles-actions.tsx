@@ -4,16 +4,30 @@ import {
 } from '../common/constants'
 
 import {
-  IGetArticles,
-  ISetArticles
+  ISetArticles,
+  IUrlParams
 } from './articles-types'
 
-export const getArticles = (payload: IGetArticles) => ({
+/**
+ * Action used to get a list of articles from backend
+ * Dispatched by Articles.tsx in useEffect
+ * Catched by saga to fetch the article
+ *
+ * @param payload pager data if needed
+ * @returns action
+ */
+export const getArticles = (payload: IUrlParams) => ({
   type: GET_ARTICLES,
   payload
 });
 
+/**
+ * 
+ * @param payload the backend response
+ */
 export const setArticles = (payload: ISetArticles) => ({
   type: SET_ARTICLES,
   payload
 });
+
+

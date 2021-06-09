@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { AppState } from '../index-reducers'
 import UserLogout from './UserLogout'
 
-const UserName: React.FC = () => {
+const UserName: FC = (): JSX.Element => {
   const user = useSelector((state: AppState) => state.user.current_user);
 
   return (

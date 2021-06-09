@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom"
 
+import { IPath } from './article-types';
 import { AppState } from '../index-reducers'
 import { getArticle } from './article-actions'
+
 import * as endpoint from '../api/endpoints'
 import TermLink from '../common/TermLink'
 
-const Article: React.FC = () => {
-
+const Article: FC = (): JSX.Element => {
   const loaded = useSelector((state: AppState) => state.api.loaded);
   const loading = useSelector((state: AppState) => state.api.loading);
   const article = useSelector((state: AppState) => state.article);
   const dispatch = useDispatch();
-  var path: any = useParams();
+  const path: IPath = useParams();
 
   React.useEffect(() => {
-    console.log("path", path)
+    /** 
+     * get the article according to the url path
+     * http://localhost:3000/article/cogo-decet-magna-utrum
+     * cogo-decet-magna-utrum is the drupal url alias of the article
+     */
     dispatch(getArticle(path))
   }, [
     path,
@@ -26,7 +31,7 @@ const Article: React.FC = () => {
   return (
     <div>
       {
-        !loading && loaded && article.data
+        !loading && loaded && article.data.length > 0
           ? (
             <div>
               <h1>{article.data[0].title}</h1>

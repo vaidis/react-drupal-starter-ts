@@ -4,16 +4,47 @@ import {
 } from '../common/constants'
 
 /**
+ * drupal response format
+ */
+export interface IArticles {
+    data: Array<any>;
+    jsonapi: {[key: string]: any};
+    links: {[key: string]: any};
+    meta: {[key: string]: any};
+}
+
+/**
+ * params that can be in the url
+ */
+export interface IUrlParams {
+    [key: string]: string | '' | number;
+    terms: string | '';
+    search: string | '';
+    offset: number;
+    page: number;
+    items: number;
+    limit: number;
+}
+
+
+export interface IPager {
+    [key: string]: string  | number;
+    first: string | number;
+    prev: string | number;
+    next: string | number;
+    self: string | number;
+}
+/**
  * Used by: actions
  */
 export interface IGetArticles {
     type: typeof GET_ARTICLES;
-    payload: any;
+    payload: IUrlParams;
 }
 
 export interface ISetArticles {
     type: typeof SET_ARTICLES;
-    payload: any;
+    payload: IArticles;
 }
 
 /**

@@ -1,5 +1,5 @@
 /** BACKEND */
-export const BASE = "http://192.168.1.111:444"
+export const BASE = "https://stevaidis.mywire.org:444"
 export const BASE_API = `${BASE}/jsonapi`
 export const CSRF_TOKEN = `${BASE}/session/token`
 
@@ -16,25 +16,46 @@ export const ARTICLE_POST_FILE = `${BASE_API}/node/article/field_image`
 export const ARTICLE_POST = `${BASE_API}/node/article`
 
 /** ARTICLES */
-const NODE = '/node/article'
-const INCLUDE = '?query_string=&include=field_image,field_tags,uid'
-const OFFSET = '&page[offset]='
-const LIMIT = '&page[limit]='
-const SORT = '&sort[sort-created][path]=created'
-const FILTER = (term: string) => `&filter[taxonomy_term--tags][condition][path]=field_tags.name&filter[taxonomy_term--tags][condition][operator]=IN&filter[taxonomy_term--tags][condition][value][]=${term}`
 export const ARTICLES = (params: any) => {
+  const NODE = '/node/article'
+  const INCLUDE = '?query_string=&include=field_image,field_tags,uid'
+  const OFFSET = '&page[offset]='
+  const LIMIT = '&page[limit]='
+  const SORT = '&sort[sort-created][path]=created'
+  
+  const filterTagsName = '&filter[taxonomy_term--tags][condition][path]=field_tags.name'
+  const filterTagsOP = '&filter[taxonomy_term--tags][condition][operator]=IN'
+  const filterTagsValue = '&filter[taxonomy_term--tags][condition][value][]='
+  const FILTER = (term: string) => `${filterTagsName}${filterTagsOP}${filterTagsValue}${term}`
+  
+  /**
+   * drupal jsonapi module format
+   */
+  const ARTICLES = `${BASE_API}${NODE}${INCLUDE}${SORT}${OFFSET}${params.offset}${LIMIT}${params.limit}`
+
+  /** 
+   * if the url in the browser has any term parameter
+   * fetch the articles that contain this term (with fields, sort, and pager data)
+   * 
+   * http://localhost:3000/?terms=blueberry
+   * http://localhost:8080/jsonapi/node/article?query_string=&include=field_image,field_tags,uid&sort[sort-created][path]=created&page[offset]=0&page[limit]=2&filter[taxonomy_term--tags][condition][path]=field_tags.name&filter[taxonomy_term--tags][condition][operator]=IN&filter[taxonomy_term--tags][condition][value][]=blueberry
+   */
   if (params.terms !== "") {
-    console.log("endpoints.js > ARTICLES > params.terms:", params)
     var FILTERS:any = '';
     params.terms.split(',').map((term: string) => {
       return (
         FILTERS = FILTERS + FILTER(term)
       )
     })
-    return `${BASE_API}${NODE}${INCLUDE}${SORT}${OFFSET}${params.offset}${LIMIT}${params.limit}${FILTERS}`
+    return `${ARTICLES}${FILTERS}`
   }
-  console.log("endpoints.js > ARTICLES > params:", params)
-  return `${BASE_API}${NODE}${INCLUDE}${LIMIT}${params.limit}${OFFSET}${params.offset}`
+  /**
+   * else, get all articles (with fields, sort, and pager data)
+   * 
+   * http://localhost:3000/?offset=8
+   * http://localhost:8080/jsonapi/node/article?query_string=&include=field_image,field_tags,uid&page[limit]=2&page[offset]=8
+   */
+    return `${ARTICLES}`
 }
 
 /** VOCABULARY */

@@ -1,4 +1,10 @@
-export const loadState = () => {
+import { AppState } from '../index-reducers';
+
+export interface IState {
+  store: AppState
+}
+
+export const loadState = ():AppState | undefined => {
   try {
     const serializedState = localStorage.getItem('state.store');
     if (serializedState === null) {
@@ -11,7 +17,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state: any) => {
+export const saveState = (state: IState): void => {
   try {
     const serializedState = JSON.stringify(state.store);
     localStorage.setItem('state.store', serializedState);

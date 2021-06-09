@@ -18,7 +18,7 @@ import {
   IUserLogoutFailure,
 } from './user-types'
 
-// -------------------------------------------- LOGIN
+/** LOGIN */
 export const userLoginRequest = (payload: IUserLoginRequest) => ({
   type: USER_LOGIN_REQUEST,
   name: payload.name,
@@ -35,7 +35,7 @@ export const userLoginFailure = (payload: IUserLoginFailure) => ({
   payload
 });
 
-// -------------------------------------------- DATA
+/** DATA */  
 export const userGetData = (payload: IUserGetData) => ({
   type: USER_GET_DATA,
   payload
@@ -46,7 +46,7 @@ export const userSetData = (payload: IUserSetData) => ({
   payload
 });
 
-// -------------------------------------------- LOGOUT
+/** LOGOUT */
 export const userLogoutRequest = () => ({
   type: USER_LOGOUT_REQUEST
 });

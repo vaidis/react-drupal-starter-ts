@@ -43,7 +43,7 @@ const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
     }
   }
 
-/** the url does not have any taxonomy term parameters */
+  /** the url does not have any taxonomy term parameters */
   return <Link to={"/?offset=" + to}>{title + " : " + to}</Link>
 }
 

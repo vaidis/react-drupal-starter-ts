@@ -14,9 +14,14 @@ import { IApiActions, IApiState } from './api-types'
 const initialStore = {
   loading: false,
   loaded: false,
-  search: '',
-  terms: [],
-  urlParams: '',
+  urlParams: {
+    terms: '',
+    search: '',
+    offset: 0,
+    page: 0,
+    items: 0,
+    limit: 0
+  },
   pager: {
     first: 0,
     last: 0,
@@ -27,10 +32,11 @@ const initialStore = {
 }
 
 const reducer: Reducer<IApiState, IApiActions> = (
-  state = initialStore,
+  state: IApiState = initialStore,
   action: IApiActions
-) => {
-  switch (action.type) {
+): IApiState => {
+
+switch (action.type) {
 
     case SET_LOADING_ON:
       return { ...state, loading: true };

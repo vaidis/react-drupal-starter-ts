@@ -13,7 +13,6 @@ const persistedState = loadState();
 // https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools
 // https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
 //
-
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -24,6 +23,12 @@ declare const window: any;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+/**
+ * create a redux store with
+ * 1. Persisted State
+ * 2. Saga middlewares
+ * 3. Redux DevTools browser extension
+ */
 const store = createStore(
   IndexReducers,
   persistedState,

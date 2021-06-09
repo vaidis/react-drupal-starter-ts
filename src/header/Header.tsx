@@ -12,7 +12,7 @@ import UserName from '../user/UserName'
  *
  * @return {string} HTML element of menu
  */
-const Header: React.FC = () => {
+const Header: React.FC = (): JSX.Element => {
   return (
     <div id="header">
       <Logo />

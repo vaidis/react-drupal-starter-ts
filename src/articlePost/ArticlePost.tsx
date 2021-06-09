@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import Dropzone from 'react-dropzone-uploader'
+// import Dropzone from 'react-dropzone-uploader'
 import CreatableSelect from 'react-select/creatable';
 import { AppState } from '../index-reducers'
 import {
@@ -15,22 +15,30 @@ import {
 } from '../articlePost/articlePost-actions'
 
 import * as endpoint from '../api/endpoints'
-import 'react-dropzone-uploader/dist/styles.css'
+import axios from 'axios';
 
-const ArticlePost: React.FC = () => {
+import { FilePond, registerPlugin } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
 
-  const files= useSelector((state: AppState) => state.articlePost.files);
-  const title= useSelector((state: AppState) => state.articlePost.title);
-  const body= useSelector((state: AppState) => state.articlePost.body);
-  const tags= useSelector((state: AppState) => state.articlePost.tags);
-  const vocabulary= useSelector((state: AppState) => state.articlePost.vocabulary);
-  const selected= useSelector((state: AppState) => state.articlePost.selected);
-  const csrf_token= useSelector((state: AppState) => state.user.csrf_token);
+
+const ArticlePost: FC = (): JSX.Element => {
+
+  // const files = useSelector((state: AppState) => state.articlePost.files);
+  const title = useSelector((state: AppState) => state.articlePost.title);
+  const body = useSelector((state: AppState) => state.articlePost.body);
+  const tags = useSelector((state: AppState) => state.articlePost.tags);
+  const vocabulary = useSelector((state: AppState) => state.articlePost.vocabulary);
+  const selected = useSelector((state: AppState) => state.articlePost.selected);
+  const csrf_token = useSelector((state: AppState) => state.user.csrf_token);
 
   const dispatch = useDispatch();
 
+
+
+
+
   /** used by the react-dropzone-uploader for the image field */
-  const [error_upload, setErrorUpload] = React.useState('');
+  // const [error_upload, setErrorUpload] = React.useState('');
 
   const handleSumbitForm = (e: any) => {
     e.preventDefault();
@@ -53,7 +61,7 @@ const ArticlePost: React.FC = () => {
           "field_image": {
             "data": {
               "type": "file--file",
-              "id": files.id,
+              // "id": files.id,
               "meta": {
                 "alt": "Json Uploaded Testing1",
                 "title": "Json Uploaded Testing1",
@@ -79,70 +87,46 @@ const ArticlePost: React.FC = () => {
     dispatch(postArticle(payload));
   }
 
-  /**
-   * react-dropzone-uploader POST request parameters
-   * The react-dropzone-uploader uses his own xhr library
-   * and thus not using the api.js
-   *
-   * @param {object} file - The image or video file
-   * @param {object} meta - Meta data
-   */
-  const getUploadParams = async ({ file, meta }: any) => {
-    var body = file;
-    const url = endpoint.ARTICLE_POST_FILE;
-    const headers = {
-      "Accept": "application/vnd.api+json",
-      "Content-Type": "application/octet-stream",
-      "Content-Disposition": "file; filename=\"" + file.name + "\"",
-      "X-CSRF-Token": csrf_token,
-    }
-    console.log("body", body)
-    console.log("headers", headers)
-    return { url, headers, body }
-  }
 
-  /**
-   * IMAGE upload
-   *
-   * Using: react-dropzone-uploader component
-   *
-   * Gets the id of the new image just stored in backend
-   * api: https://github.com/fortana-co/react-dropzone-uploader/blob/8603b1892f568ef14f35ace5596c3f5b4b6381d3/docs/api.md
-   *
-   * @param {object} xhr - The fetcher
-   * @param {object} fileWithMeta - file callback functions
-   * @param {object} status - response status
-   *
-   */
-  const handleChangeStatus = ({ xhr }: any, fileWithMeta: any, status: any) => {
-    if (xhr) {
-      console.log('xhr', xhr)
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          const result = JSON.parse(xhr.response);
-          console.log('xhr.response', result)
-          if (result.hasOwnProperty('data')) {
-            dispatch(setArticleFile(result.data.id))
-          }
-          if (result.hasOwnProperty('errors')) {
-            status[0].remove()
-            setErrorUpload(fileWithMeta)
-            /**
-             * for some reason, the fileWithMeta gives the data of status
-             * and the status gives the data of the fileWithMeta
-             */
-            // console.log("handleChangeStatus status", status);
-            // console.log("xhr.response fileWithMeta", fileWithMeta);
-            // console.log('xhr.response result', result)
-            // console.log('xhr.response result.error', result.errors)
-          }
-        }
-      }
-    }
-  }
+  // const getUploadParams = async ({ file, meta }: any) => {
+  //   var body = file;
+  //   const url = endpoint.ARTICLE_POST_FILE;
+  //   const headers = {
+  //     "Accept": "application/vnd.api+json",
+  //     "Content-Type": "application/octet-stream",
+  //     "Content-Disposition": "file; filename=\"" + file.name + "\"",
+  //     "X-CSRF-Token": csrf_token,
+  //   }
+  //   console.log("body", body)
+  //   console.log("headers", headers)
+  //   return { url, headers, body }
+  // }
+
+  // const handleChangeStatus = ({ xhr }: any, fileWithMeta: any, status: any) => {
+  //   if (xhr) {
+  //     console.log('xhr', xhr)
+  //     xhr.onreadystatechange = () => {
+  //       if (xhr.readyState === 4) {
+  //         const result = JSON.parse(xhr.response);
+  //         console.log('xhr.response', result)
+  //         if (result.hasOwnProperty('data')) {
+  //           dispatch(setArticleFile(result.data.id))
+  //         }
+  //         if (result.hasOwnProperty('errors')) {
+  //           status[0].remove()
+  //           setErrorUpload(fileWithMeta)
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+
 
   React.useEffect(() => {
-    /** get a fresh vocabulary to fill the react-select options list */
+    /** 
+     * get a fresh vocabulary to fill the react-select options list 
+     */
     const vocabName: any = "tags";
     dispatch(getVocabulary(vocabName));
   }, [dispatch]);
@@ -183,7 +167,6 @@ const ArticlePost: React.FC = () => {
    * @dispatch {object} body - The body of POST request
    */
   const handleSelectOnCreate = (name: any) => {
-    // console.group('handleSelectOnCreate', name);
     const body: any = {
       "data": {
         "type": "taxonomy_term--tags",
@@ -195,8 +178,157 @@ const ArticlePost: React.FC = () => {
     dispatch(postTag(body));
   }
 
+  {/* ---------------------------------------------------------------------------- */ }
+  // const [fileSelected, setFileSelected] = React.useState<File | undefined>()
+
+  // const formImage = React.useRef<HTMLFormElement>(null)
+  // const formImage: any = React.useRef(null)
+
+  // const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
+  //   const fileList = e.target.files;
+  //   if (!fileList) return;
+  //   console.log('handleImageChange fileList', fileList[0])
+  //   setFileSelected(fileList[0]);
+  // };
+  // const handleImageChange = function (e: any) {
+  //   const fileList = e.target.files;
+  //   if (!fileList) return;
+  //   console.log('handleImageChange fileList', fileList[0])
+  //   setFileSelected(fileList[0]);
+  // };
+
+
+  // const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+  //   console.log('uploadFile e', e)
+  //   if (fileSelected) {
+
+  //     /** FormData */
+  //     // if (formImage) {
+  //     // let formData: <HTMLFormElement, undefined> = new FormData(formImage);
+  //     // formData.append("image", fileSelected, fileSelected.name);
+  //     let formData: any = new FormData(formImage);
+  //     formData.append("image", fileSelected);
+
+  //     // }
+  //     console.log('uploadFile fileSelected', fileSelected)
+
+  //     // formData.append("file", fileSelected);
+
+  //     // for (var [key, value] of formData.entries()) { 
+  //     //   console.log(key, value);
+  //     // }
+
+  //     // var data = formData;
+
+  //     /** options */
+  //     const url = 'https://stevaidis.mywire.org:444/jsonapi/node/article/field_image';
+  //     var config: any = {
+  //       method: 'post',
+  //       headers: {
+  //         'Accept': 'application/vnd.api+json',
+  //         'content-type': 'multipart/form-data',
+  //         'X-CSRF-Token': csrf_token,
+  //         'Content-Disposition': 'file; filename="' + fileSelected.name + '"',
+  //         'X-Requested-With': 'XMLHttpRequest',
+  //       },
+  //       withCredentials: true,
+  //       data: formData
+  //     };
+  //     console.log('uploadFile axios(config)', config)
+
+  //     /** axios */
+  //     // return axios.post(url,formData, config)
+  //     //   .then(function (response) {
+  //     //     console.log(JSON.stringify(response.data));
+  //     //   })
+  //     //   .catch(function (error) {
+  //     //     console.log(error);
+  //     //   });
+
+
+  //     // const options: object = {
+  //     //   url: endpoint.ARTICLE_POST_FILE,
+  //     //   method: 'post',
+  //     //   headers: {
+  //     //     "Accept": "application/vnd.api+json",
+  //     //     "Content-Type": "application/octet-stream",
+  //     //     "X-CSRF-Token": csrf_token,
+  //     //     "Content-Disposition": "file; filename=\"" + fileSelected.name + "\"",
+  //     //   },
+  //     //   withCredentials: true,
+  //     //   timeout: 2000,
+  //     //   data: formData,
+  //     // data: Buffer.from(data, "binary"),
+  //     // }
+  //     // return axios(options)
+  //     //   .then(response => response)
+  //     //   .catch(error => {
+  //     //     throw new Error("Conection time out");
+  //     //   });
+
+  //   }
+  // };
+  {/* ---------------------------------------------------------------------------- */ }
+
+
+
+
+  //   FilePond.setOptions({
+  //     server: {
+  //         url: 'https://stevaidis.mywire.org:444',
+  //         process: {
+  //             url: './jsonapi/node/article/field_image',
+  //             method: 'POST',
+  //             withCredentials: true,
+  //             headers: {},
+  //             timeout: 7000,
+  //             onload: null,
+  //             onerror: null,
+  //             ondata: null
+  //         }
+  //     }
+  // });
+
+  // const pond = FilePond.
+  const [files, setFiles] = React.useState([])
+
   return (
     <div>
+     
+      <FilePond
+        name={'image'}
+        files={files}
+        // onupdatefiles={setFiles}
+        server={{
+          url: '',
+          process: {
+            url: 'https://stevaidis.mywire.org:444/jsonapi/node/article/field_image',
+            method: 'POST',
+            withCredentials: true,
+            headers: {
+              'X-CSRF-TOKEN': csrf_token,
+            },
+          },
+        }}
+      />
+
+      <div>
+        {/* ---------------------------------------------------------------------------- */}
+        {/* <form ref={formImage}>
+          <input
+            accept="image/*"
+            id="photo"
+            name="photo"
+            type="file"
+            multiple={false}
+            onChange={handleImageChange}
+          />
+          <div>fileSelected: {JSON.stringify(fileSelected?.name)}</div><br />
+          <button onClick={uploadFile}>Choose Picture</button>
+        </form> */}
+        {/* ---------------------------------------------------------------------------- */}
+      </div>
+
       <form
         onSubmit={handleSumbitForm}
         style={{ margin: '10px' }}
@@ -209,20 +341,7 @@ const ArticlePost: React.FC = () => {
           value={title || ''}
           style={{ margin: '10px 0px' }}
         />
-        <Dropzone
-          multiple={false}
-          maxFiles={1}
-          getUploadParams={getUploadParams}
-          onChangeStatus={handleChangeStatus}
-          accept="image/*,audio/*,video/*"
-          inputContent={(files, extra) => (extra.reject ? 'Image, audio and video files only' : 'Drag Files')}
-          styles={{
-            dropzoneReject: { borderColor: 'red', backgroundColor: '#DAA' },
-            inputLabel: (files, extra) => (extra.reject ? { color: 'red' } : {}),
 
-          }}
-        />
-        {error_upload}<br />
         <textarea
           name="body"
           placeholder="Body"
@@ -256,7 +375,7 @@ const ArticlePost: React.FC = () => {
           <div><strong>store.articlePost.selected:</strong> {JSON.stringify(selected)}</div><br />
         </code>
       </div>
-    </div>
+    </div >
   )
 }
 

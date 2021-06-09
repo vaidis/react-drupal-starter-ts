@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from "react-redux";
 import { AppState } from '../index-reducers'
 
 /**
  * Renders a page that shows the user data
  */
-const UserProfile: React.FC = () => {
+const UserProfile: FC = (): JSX.Element => {
   const user = useSelector((state: AppState) => state.user);
+
   return (
     <div>
       <h2>User Profile</h2>

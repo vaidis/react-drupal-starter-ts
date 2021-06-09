@@ -22,7 +22,7 @@ interface IProps {
 const PrivateRoute: React.FC<IProps> = ({
   to,
   label,
-}) => {
+}): JSX.Element | null => {
 
   const user = useSelector((state: AppState) => state.user);
   const isAuthenticated = user.current_user.uid === 0 ? false : true

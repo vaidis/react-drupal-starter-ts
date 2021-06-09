@@ -1,15 +1,8 @@
 import { Reducer } from 'redux';
 
 import {
-  // USER_LOGIN_REQUEST,
-  // USER_LOGIN_SUCCESS,
-  // USER_LOGIN_FAILURE,
-  // USER_GET_DATA,
   USER_SET_DATA,
-  // USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
-  // USER_LOGOUT_FAILURE,
-  // USER_GET_STATUS,
 } from '../common/constants'
 
 import { IUserState, IUserActions } from './user-types'
@@ -22,6 +15,7 @@ const initialState = {
   csrf_token: '',
   logout_token: '',
 }
+
 
 const reducer: Reducer<IUserState, any> = (
   state = initialState,

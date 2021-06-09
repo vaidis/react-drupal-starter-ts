@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from "react-redux";
 
 import { userLoginRequest } from './user-actions'
@@ -8,9 +8,8 @@ import {ICredentials} from './user-types'
 /**
  * Login Form
  *
- * @param {Function} dispatchUserLoginRequest dispatch action to start saga worker login
  */
-  const UserLogin: React.FC = () => {
+  const UserLogin: FC<void> = () => {
 
   const dispatch = useDispatch();
 
@@ -20,6 +19,10 @@ import {ICredentials} from './user-types'
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const payload: ICredentials = { name: name, pass: pass };
+    /** 
+     * dispatch the action to start the saga worker login 
+     * in order to post the credentials to drupal
+    */
     dispatch(userLoginRequest(payload));
   }
 

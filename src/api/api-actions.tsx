@@ -7,11 +7,12 @@ import {
   SET_LOADED_FALSE,
 } from '../common/constants'
 
-import {
-  ISetApiUrlParams,
-  ISetApiPagerLinks,
-} from './api-types'
+import { IUrlParams } from '../articles/articles-types'
+import { IPager } from './api-types'
 
+/**
+ * loading...
+ */
 export const setLoadedTrue = () => ({
   type: SET_LOADED_TRUE
 });
@@ -28,12 +29,19 @@ export const setLoadingOff = () => ({
   type: SET_LOADING_OFF
 });
 
-export const setApiUrlParams = (payload: ISetApiUrlParams) => ({
+/**
+ * url params used by pager and tag filter
+ */
+export const setApiUrlParams = (payload: IUrlParams) => ({
   type: SET_API_URL_PARAMS,
   payload
 })
 
-export const setApiPagerLinks = (payload: ISetApiPagerLinks) => ({
+/**
+ * 
+ * @param payload object with numbers used by for pager buttons
+ */
+export const setApiPagerLinks = (payload: IPager) => ({
   type: SET_API_PAGER_LINKS,
   payload
 });

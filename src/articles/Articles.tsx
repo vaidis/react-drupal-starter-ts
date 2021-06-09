@@ -1,19 +1,21 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, { FC } from 'react';
+import { Link, withRouter, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getArticles } from './articles-actions'
 import { setApiUrlParams } from '../api/api-actions'
-import { compareObjects } from '../utils/compareObjects'
 import { AppState } from '../index-reducers'
 import Pager from '../pager/Pager'
+import { IUrlParams } from './articles-types'
+
+import { compareObjects } from '../utils/compareObjects'
+// import { deepEqual } from 'fast-equals';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Articles: React.FC<any> = () => {
+const Articles: FC = (): JSX.Element => {
   const loading = useSelector((state: AppState) => state.api.loading);
   const loaded = useSelector((state: AppState) => state.api.loaded);
   const articles = useSelector((state: AppState) => state.articles.data);
@@ -21,10 +23,12 @@ const Articles: React.FC<any> = () => {
   var query: any = useQuery();
   const dispatch = useDispatch();
 
-   /**
+  /**
+   * take the parameters from URL
+   * http://localhost:3000/?terms=chu&offset=2
    * @type {object} urlParams - URL parameters in the browser
    */
-  const urlParams: any = {
+  const urlParams: IUrlParams = {
     terms: query.get('terms') || '',
     search: query.get('search') || '',
     offset: parseInt(query.get('offset')) || 0,
@@ -35,13 +39,16 @@ const Articles: React.FC<any> = () => {
 
   React.useEffect(() => {
     /**
-     * If the browser URL params has been change
+     * If the URL params in the browser has been change
      * update the store.api.urlParams and
-     * get the new list of articles
+     * get a new list of articles
      *
-     * @type {object} urlParams - parameter in the browser
-     * @type {object} storeParams - parameter in the redux
+     * @type {object} urlParams - parameters in the browser
+     * @type {object} storeParams - parameters in the redux store
      */
+    // console.log("object0", urlParams, storeParams)
+    // if (deepEqual(urlParams, storeParams)) {
+    // if (JSON.stringify(urlParams) === JSON.stringify(storeParams)) {
     if (!compareObjects(urlParams, storeParams)) {
       dispatch(setApiUrlParams(urlParams))
       dispatch(getArticles(urlParams))
@@ -60,8 +67,7 @@ const Articles: React.FC<any> = () => {
           ? (
             articles.map((item: any, i: number) => {
 
-              /** render terms */
-              // console.log("item.field_tags", item.field_tags)
+              /** render terms div */
               let terms = ''
               terms = item.field_tags.map((term: any, i: number) => {
                 return (
@@ -71,7 +77,7 @@ const Articles: React.FC<any> = () => {
                 )
               })
 
-              /** render image */
+              /** render image div */
               var image: any = ''
               var imageobject: any = ''
               if (item.field_image.image_style_uri) {
@@ -88,18 +94,19 @@ const Articles: React.FC<any> = () => {
                 <div key={i} style={{ marginBottom: "20px" }}>
                   <Link to={item.path.alias}>
                     <h4 style={{ marginBottom: "0px" }}>{item.title}</h4>
-                    <img src={image} alt="Girl in a jacket"></img>
+                    <img src={image} alt=""></img>
                   </Link>
                   {terms}
                 </div>
               )
             })
           )
-          : ( <div>Loading...</div> )
+          : (<div>Loading...</div>)
       }
       <Pager />
     </div>
   );
 }
 
-export default Articles;
+// export default Articles;
+export default withRouter(Articles);

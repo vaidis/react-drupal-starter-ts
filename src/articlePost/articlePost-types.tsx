@@ -55,7 +55,7 @@ export interface IPostTag {
 
 export interface ISetArticleFile {
     type: typeof SET_ARTICLE_FILE;
-    payload: any;
+    payload: File | null;
 }
 
 export interface ISetArticleTitle {

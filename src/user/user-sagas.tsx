@@ -10,9 +10,7 @@ import {
   SET_LOADING_ON,
   SET_LOADING_OFF,
   USER_LOGIN_REQUEST,
-  // USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
-  // USER_GET_DATA,
   USER_SET_DATA,
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
@@ -38,11 +36,14 @@ function* UserLoginWorker({name, pass}: ICredentials) {
     "pass": pass,
   }
   yield put({ type: SET_LOADING_ON })
+
   try {
     const response: ILoginRersponse = yield call(api.login, endpoint.LOGIN, credentials)
     yield put({ type: USER_SET_DATA, payload: response.data });
+
   } catch (error) {
     yield put({ type: USER_LOGIN_FAILURE });
+
   } finally {
     yield put({ type: SET_LOADING_OFF })
   }
@@ -62,16 +63,16 @@ export function* userLoginWatcher() {
  */
 function* UserLogoutWorker() {
   yield put({ type: SET_LOADING_ON })
+
   try {
     const state = yield select()
-    const tokens = {
-      logout_token: state.user.logout_token,
-      csrf_token: state.user.csrf_token,
-    }
-    yield call(api.logout, endpoint.LOGOUT, tokens);
+    const token = state.user.logout_token
+    yield call(api.logout, endpoint.LOGOUT, token);
     yield put({ type: USER_LOGOUT_SUCCESS });
+
   } catch (error) {
     yield put({ type: USER_LOGOUT_FAILURE });
+
   } finally {
     yield put({ type: SET_LOADING_OFF })
   }

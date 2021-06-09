@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <Route path="/user/login" component={UserLogin} />
         <Route path="/user/profile" component={UserProfile} />
         <RouteProtected path="/article/create" component={ArticlePost} />
-        <Route path="/article/:path" component={Article} />
+        <Route path="/article/:path" component={Article}/>
         <Route exact path="/:path?" component={Articles} />
       </Switch>
     </div>

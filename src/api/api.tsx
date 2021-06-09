@@ -2,18 +2,23 @@ import axios from 'axios';
 import * as endpoint from './endpoints'
 
 /**
+ * drupal api
+ * https://www.drupal.org/docs/8/core/modules/rest/javascript-and-drupal-8-restful-web-services
+ */
+
+/**
  * GET a csrf token
  *
  * Differect token every time for anonymous users
- * The same token for loggen in users
+ * The same token for logged in users
  *
- * used by: api functions
+ * used by: api functions get, login, post...
  * using: url of token endpoint
  *
- * @return {string} The csrf token
+ * @return {string} The actual csrf token
  */
-export const getCsrfToken = async () => {
-  const csrf_token = await axios(endpoint.CSRF_TOKEN)
+export const getCsrfToken = async (): Promise<string> => {
+  const csrf_token: string = await axios(endpoint.CSRF_TOKEN)
     .then(response => response.data)
     .catch((error) => {
       if (error.message === undefined) {
@@ -25,13 +30,18 @@ export const getCsrfToken = async () => {
 }
 
 export const api = {
+
+
+
   /**
    * GET request
    *
    * @param {string} url - The backend url
    * @return {object}      The backend response
    */
-  get: async function get(url: string) {
+  get: async function get(
+    url: string
+  ): Promise<any> {
     console.group("api.get", decodeURI(url))
     return axios.get(url, {
       headers: {
@@ -42,7 +52,7 @@ export const api = {
       timeout: 5000,
     })
       .then(response => {
-        console.log('response', response); console.groupEnd();
+        console.log('api.get(...) response', response); console.groupEnd();
         return response
       })
       .catch(error => {
@@ -51,14 +61,19 @@ export const api = {
         );
       });
   },
-  login: async function login(url: string, data: object) {
-    /**
-     * POST request for login
-     *
-     * @param {string} url  - The backend url
-     * @param {object} data - The body of POST request
-     * @return {object}       The backend response
-     */
+
+
+  /**
+   * POST request for login
+   *
+   * @param {string} url  - The backend url
+   * @param {object} data - The body of POST request
+   * @return {object}       The backend response
+   */
+  login: async function login(
+    url: string,
+    data: object
+  ): Promise<any> {
     const csrf_token = await getCsrfToken()
     if (csrf_token !== "Connection Error") {
       const options: object = {
@@ -79,6 +94,9 @@ export const api = {
         });
     }
   },
+
+
+
   /**
    * POST request for new articles
    *
@@ -87,7 +105,11 @@ export const api = {
    * @param {string} csrf_token - CSRF token of the logged in user from redux store
    * @return {object}             The backend response
    */
-  post: async function post(url: string, data: string, csrf_token: string) {
+  post: async function post(
+    url: string,
+    data: string,
+    csrf_token: string
+  ): Promise<any> {
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
       url: url,
@@ -110,6 +132,9 @@ export const api = {
         throw new Error("Conection time out");
       });
   },
+
+
+
   /**
    * POST request for uploading files
    *
@@ -119,7 +144,12 @@ export const api = {
    * @param {string} csrf_token - From the logged in user
    * @return {object}             The backend response
    */
-  postFile: async function postFile(url: string, file: string, data: object, csrf_token: string) {
+  postFile: async function postFile(
+    url: string,
+    file: string,
+    data: object,
+    csrf_token: string
+  ): Promise<any> {
     const token = csrf_token ? csrf_token : await getCsrfToken()
     const options: object = {
       url: url,
@@ -143,6 +173,9 @@ export const api = {
         throw new Error("Conection time out");
       });
   },
+
+
+
   /**
    * POST logout
    *
@@ -150,31 +183,39 @@ export const api = {
    * @param {object} data - CSRF and logout tokens
    * @return {object}       The backend response
    */
-  logout: async function logout(url: string, tokens: any) {
-    console.log("api.logout(url, tokens): ", decodeURI(url), tokens)
+  logout: async function logout(
+    url: string,
+    token: string
+  ): Promise<any> {
+    console.log("api.logout(url, tokens): ", decodeURI(url), token)
     const csrf_token: any = getCsrfToken()
     if (csrf_token !== "Connection Error") {
-      const logout_token = tokens.logout_token
-      const csrf_token = tokens.csrf_token
+      const logout_token = token
       const options: object = {
-        url: url + "&token=" + logout_token + "&csrf_token=" + csrf_token,
+        url: url + "&token=" + logout_token,
         method: 'post',
         headers: {
           "Content-Type": "application/hal+json",
-          "X-CSRF-Token": csrf_token,
         },
         withCredentials: true,
         timeout: 2000,
       }
+      console.log("api.logout / axios / options : ", options)
       return axios(options).then(response => response)
         .catch(error => {
           throw new Error("Conection time out");
         });
     }
   },
+
+
+
   patch: function patch(url: string, data: object) {
     console.log("api.patch ", url, data);
   },
+
+
+
   delete: function del(url: string, data: object) {
     console.log("api.delete ", url, data);
   }
