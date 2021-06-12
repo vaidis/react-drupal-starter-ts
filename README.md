@@ -6,7 +6,7 @@ A simple react-redux-saga typescript front-end for Drupal 8 with jsonapi module 
 
 ## :floppy_disk:  Installation
 ```
-git clone https://stevaidis.mywire.org:4080/ste/react-drupal-starter.git
+git clone https://stevaidis.mywire.org:4080/ste/react-drupal-starter-ts.git
 cd react-drupal-starter
 npm install
 npm start
