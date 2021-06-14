@@ -9,10 +9,9 @@ import {ICredentials} from './user-types'
  * Login Form
  *
  */
-  const UserLogin: FC<void> = () => {
+const UserLogin: FC<void> = () => {
 
   const dispatch = useDispatch();
-
   const [name, setName] = React.useState("manager");
   const [pass, setPass] = React.useState("1234");
 

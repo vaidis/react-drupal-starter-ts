@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
  *
  * @return {string} HTML element of logo
  */
-const Logo: React.FC = () => {
+const Logo: React.FC = (): JSX.Element => {
     return (
         <div id="Logo">
             <h1><Link to={"/"}>Logo</Link></h1>

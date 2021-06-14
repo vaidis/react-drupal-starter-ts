@@ -10,7 +10,7 @@ import Article from './article/Article'
 import ArticlePost from './articlePost/ArticlePost'
 
 
-const App: React.FC = () => {
+const App: React.FC = (): JSX.Element => {
   return (
     <div className="App">
       <Header />

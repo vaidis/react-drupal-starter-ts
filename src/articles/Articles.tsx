@@ -46,9 +46,6 @@ const Articles: FC = (): JSX.Element => {
      * @type {object} urlParams - parameters in the browser
      * @type {object} storeParams - parameters in the redux store
      */
-    // console.log("object0", urlParams, storeParams)
-    // if (deepEqual(urlParams, storeParams)) {
-    // if (JSON.stringify(urlParams) === JSON.stringify(storeParams)) {
     if (!compareObjects(urlParams, storeParams)) {
       dispatch(setApiUrlParams(urlParams))
       dispatch(getArticles(urlParams))

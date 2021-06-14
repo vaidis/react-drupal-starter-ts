@@ -11,7 +11,7 @@ import { AppState } from './../index-reducers'
  * Using: drupal backend response saved in redux store
  *
  */
-const Pager: React.FC = () => {
+const Pager: React.FC = (): JSX.Element => {
   const urlParams = useSelector((state: AppState) => state.api.urlParams);
   const pager = useSelector((state: AppState) => state.api.pager);
 

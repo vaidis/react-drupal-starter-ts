@@ -9,7 +9,7 @@ import LinkPrivate from './LinkPrivate'
  *
  * @return {string} HTML for menu
  */
-const Menu: React.FC = () => {
+const Menu: React.FC = (): JSX.Element => {
   return (
     <div id="Menu">
       <Link to="/">Home</Link>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import { Link } from "react-router-dom";
 import { AppState } from './../index-reducers'
+import { useSelector } from "react-redux";
 
 interface IProps {
   to: any;
@@ -32,7 +32,9 @@ interface IProps {
  *     />
  *
  */
-const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
+const PagerLink: React.FC<IProps> = ({ to, title }: { to: string, title: string }): JSX.Element => {
+
+  const urlParams = useSelector((state: AppState) => state.api.urlParams);
 
   /** include the taxonomy term if needed */
   if (typeof (urlParams.terms) !== 'undefined') {
@@ -47,8 +49,4 @@ const PagerLink: React.FC<IProps> = ({ to, title, urlParams }) => {
   return <Link to={"/?offset=" + to}>{title + " : " + to}</Link>
 }
 
-const mapStateToProps = (state: AppState) => ({
-  urlParams: state.api.urlParams,
-})
-
-export default connect(mapStateToProps, null)(PagerLink)
+export default PagerLink;
