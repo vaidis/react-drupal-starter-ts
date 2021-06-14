@@ -2,16 +2,15 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from '../index-reducers'
 import 'react-dropzone-uploader/dist/styles.css'
-import { IPostArticle } from './articlePost-types';
 
 import {
   postArticle,
   setArticleBody,
   setArticleTitle,
 } from './articlePost-actions'
-
 import ArticlePostImage from './ArticlePost-image';
 import ArticlePostTags from './ArticlePost-tags';
+import { payload } from './articlePost-payload';
 
 const ArticlePost: FC = (): JSX.Element => {
 
@@ -25,51 +24,22 @@ const ArticlePost: FC = (): JSX.Element => {
   const handleSumbitForm = (e: any) => {
     e.preventDefault();
     /**
-     * @type {object} payload - the body of POST request of
-     *     an article that contains an image and at least one
-     *     term. There is no validation yet
-     */
-    const payload: IPostArticle = {
-      "data": {
-        "type": "node--article",
-        "attributes": {
-          "title": title,
-          "body": {
-            "value": body,
-            "format": "plain_text"
-          }
-        },
-        "relationships": {
-          "field_image": {
-            "data": {
-              "type": "file--file",
-              "id": files.id,
-              "meta": {
-                "alt": "Json Uploaded Testing1",
-                "title": "Json Uploaded Testing1",
-                "width": null,
-                "height": null
-              }
-            }
-          },
-          "field_tags": {
-            "data": tags
-          }
-        }
-      }
-    }
-
-    /**
      * Dispatch the POST_ARTICLE action that triggers the
      * saga postArticleWorker to POST the article to drupal
      *
      * @param {object} payload - the POST request body
      */
-    dispatch(postArticle(payload));
+    dispatch(postArticle(payload({
+      title: title,
+      body: body,
+      fileId: files.id,
+      tags: tags
+    })));
   }
 
   return (
     <div>
+      <div>Post Article</div>
       <form
         onSubmit={handleSumbitForm}
         style={{ margin: '10px' }}
@@ -84,6 +54,7 @@ const ArticlePost: FC = (): JSX.Element => {
         />
 
         <ArticlePostImage />
+
         <ArticlePostTags />
 
         <textarea

@@ -10,6 +10,42 @@ import {
     ADD_SELECTED,
 } from '../common/constants'
 
+
+
+export interface IPostArticle2body {
+    value: string;
+    format: string;
+}
+export interface IPostArticle2 {
+    data: {
+        type: string;
+        attributes: {
+            title: string;
+            body: IPostArticle2body
+
+        },
+        relationships: {
+            field_image: {
+                data: {
+                    type: string;
+                    id: string;
+                    meta: {
+                        alt: string;
+                        title: string;
+                        width: null;
+                        height: null;
+                    }
+                }
+            },
+            field_tags: {
+                data: string[];
+            }
+        }
+    }
+}
+
+
+
 export interface IPostArticle {
     data: {
         type: string;
