@@ -11,16 +11,18 @@ import {
   ADD_SELECTED,
 } from '../common/constants'
 
+export const initialState = {
+  images: [],
+  files: [],
+  tags: [],
+  title: '',
+  body: '',
+  selected: [],
+  vocabulary: [],
+}
+
 const reducer = (
-  state = {
-    images: [],
-    files: [],
-    tags: [],
-    title: '',
-    body: '',
-    selected: [],
-    vocabulary: [],
-  },
+  state = initialState,
   action: any
 ) => {
   switch (action.type) {

@@ -42,7 +42,6 @@ export const api = {
   get: async function get(
     url: string
   ): Promise<any> {
-    console.group("api.get", decodeURI(url))
     return axios.get(url, {
       headers: {
         "Content-Type": "application/hal+json",
@@ -213,7 +212,6 @@ export const api = {
   patch: function patch(url: string, data: object) {
     console.log("api.patch ", url, data);
   },
-
 
 
   delete: function del(url: string, data: object) {
