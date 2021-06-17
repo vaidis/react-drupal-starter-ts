@@ -43,7 +43,7 @@ export const addSelected = (payload: IAddSelected) => ({
   payload
 });
 
-export const getVocabulary = (payload: IGetVocabulary) => ({
+export const getVocabulary = (payload: string) => ({
   type: GET_VOCABULARY,
   payload
 });
@@ -63,7 +63,7 @@ export const postArticleFile = (payload: IPostArticleFile) => ({
   payload
 });
 
-export const postTag = (payload: IPostTag) => ({
+export const postTag = (payload: string) => ({
   type: POST_TAG,
   payload
 });

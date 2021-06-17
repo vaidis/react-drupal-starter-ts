@@ -60,7 +60,7 @@ function* postArticleFileWorker(payload: any): SagaIterator {
   }
 }
 
-function* getVocabularyWorker(payload: any): SagaIterator {
+export function* getVocabularyWorker(payload: any): SagaIterator {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
 

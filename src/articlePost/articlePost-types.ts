@@ -104,7 +104,7 @@ export interface IAddSelected {
 
 export interface IGetVocabulary {
     type?: typeof GET_VOCABULARY;
-    payload?: any;
+    payload?: string;
 }
 
 export interface ISetVocabulary {
@@ -119,7 +119,7 @@ export interface IPostArticleFile {
 
 export interface IPostTag {
     type: typeof POST_TAG;
-    payload: any;
+    payload: string;
 }
 
 export interface ISetArticleFile {

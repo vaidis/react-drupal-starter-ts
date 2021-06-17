@@ -5,6 +5,7 @@ import { Router } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './state/store'
 import history from "./state/history";
+import "@testing-library/jest-dom/extend-expect";
 
 test('renders header logo', () => {
   const { getByText } = render(
