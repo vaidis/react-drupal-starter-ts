@@ -60,12 +60,12 @@ function* postArticleFileWorker(payload: any): SagaIterator {
   }
 }
 
-export function* getVocabularyWorker(payload: any): SagaIterator {
+export function* getVocabularyWorker({payload}: {payload:string}): SagaIterator {
   yield put({ type: SET_LOADING_ON })
   yield put({ type: SET_LOADED_FALSE })
 
   try {
-    const response = yield call(api.get, endpoint.VOCABULARY(payload.payload));
+    const response = yield call(api.get, endpoint.VOCABULARY(payload));
     yield put({ type: SET_VOCABULARY, payload: response.data });
     yield put({ type: SET_LOADED_TRUE })
   } catch (error) {

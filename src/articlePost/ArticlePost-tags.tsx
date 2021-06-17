@@ -17,14 +17,13 @@ import {
 
 const ArticlePostTags: FC = (): JSX.Element => {
 
-  const tags = useSelector((state: AppState) => state.articlePost.tags);
   const vocabulary = useSelector((state: AppState) => state.articlePost.vocabulary);
   const selected = useSelector((state: AppState) => state.articlePost.selected);
   const dispatch = useDispatch();
 
   /** get a fresh vocabulary to fill the react-select options list */
   React.useEffect(() => {
-    const vocabName: any = "tags";
+    const vocabName = "tags";
     dispatch(getVocabulary(vocabName));
   }, [dispatch]);
 
