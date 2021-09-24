@@ -80,7 +80,7 @@ The component `/header/Menu.js` uses the `/header/LinkPrivate.js` component to h
 
 The `App.js` uses the `/utils/RouteProtected.js` to redirect the non-authenticated users from the protected routes to /user/login
 
-## :beetle: Debuging
+## :bug: Debuging
 
 - Install the redux browser extention for [chrome](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) or [firefox](https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/)
 - Get the postman collection: [react-drupal-starter.postman_collection.json](https://stevaidis.mywire.org:4080/ste/react-drupal-starter/src/branch/master/drupal/react-drupal-starter.postman_collection.json)
@@ -191,7 +191,7 @@ http://localhost/admin/config/development/generate/content
 
 
 
-##  :beetle: Test Drupal Endpoints
+##  :test_tube: Test Drupal Endpoints
 
 You can download the postman collection [react-drupal-starter.postman_collection.json](https://stevaidis.mywire.org:4080/ste/react-drupal-starter/src/branch/master/drupal/react-drupal-starter.postman_collection.json) or use the curl from the console
 
